@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ⵜⴰⵡⵓⵔⵉ — TAWURI | Artisanat Marocain Authentique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--cream:#f5f0e8;--dark:#0d1f17;--forest:#1a3a2a;--forest-m:#245038;--forest-l:#2f6847;--sage:#4a8c5c;--mint:#7ab893;--gold:#c9a84c;--gold-l:#e8c96a;--text:#f0ebe0;--muted:#a8c4b0;--red:#f87171;--border:#2f6847;--white:#ffffff;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,0.18);--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Lato','Helvetica',sans-serif;background:var(--cream);color:#1a1a1a;line-height:1.6;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+h1,h2,h3,h4,.font-title{font-family:'Playfair Display','Georgia',serif}
+.geometric-line{height:2px;background:repeating-linear-gradient(90deg,var(--gold) 0,var(--gold) 10px,transparent 10px,transparent 18px);margin:16px 0;opacity:.6}
+nav{background:linear-gradient(90deg,var(--forest) 0%,#1a3a2a 100%);padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;min-height:72px;position:sticky;top:0;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+nav .logo{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+nav .logo .tifinagh{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);font-weight:bold;text-shadow:0 0 15px rgba(201,168,76,0.6);transition:var(--transition)}
+nav .logo:hover .tifinagh{transform:scale(1.05)}
+nav .logo .brand{font-family:'Playfair Display',serif;color:var(--cream);font-size:.9rem;letter-spacing:4px}
+nav .nav-links{display:flex;gap:4px;flex-wrap:wrap}
+nav .nav-links button{background:transparent;color:var(--muted);border:none;padding:8px 12px;cursor:pointer;font-size:.8rem;border-radius:24px;transition:var(--transition);font-family:'Lato',sans-serif;font-weight:600;letter-spacing:.5px;position:relative}
+nav .nav-links button::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;background:var(--gold);transition:.3s;transform:translateX(-50%)}
+nav .nav-links button:hover{background:rgba(255,255,255,0.1);color:var(--gold)}
+nav .nav-links button:hover::after{width:60%}
+nav .nav-links button.active{background:var(--forest-m);color:var(--gold);font-weight:bold}
+nav .auth-area{display:flex;gap:8px;align-items:center}
+nav .auth-area .user-badge{color:var(--cream);font-size:.82rem;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);padding:6px 12px;border-radius:24px}
+nav .auth-area button{background:var(--forest-l);color:var(--cream);border:none;padding:8px 16px;cursor:pointer;border-radius:24px;font-size:.8rem;font-weight:600;transition:var(--transition);font-family:'Lato',sans-serif}
+nav .auth-area button:hover{background:var(--gold);color:var(--dark)}
+.page{display:none;animation:fadeSlideIn .45s ease}
+.page.active{display:block}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin:12px 0;border:1px solid rgba(201,168,76,0.25);transition:all .4s ease;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(201,168,76,0.04) 0%,transparent 80%);pointer-events:none}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,0.22);border-color:var(--gold-l)}
+.card-dark{background:rgba(13,31,23,0.96);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:12px 0}
+.card-gold{background:linear-gradient(135deg,#fdf8ed,#faf3e0);border:2px solid var(--gold-l);border-radius:var(--radius);padding:24px;margin:12px 0}
+.artisan-card{background:rgba(255,255,255,0.95);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:all .45s cubic-bezier(.25,.8,.25,1.2);border:1px solid rgba(201,168,76,0.2);display:flex;flex-direction:column;cursor:pointer}
+.artisan-card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 18px 44px rgba(0,0,0,0.28);border-color:var(--gold)}
+.artisan-card .artisan-body{padding:18px;flex:1;display:flex;flex-direction:column;gap:6px}
+.btn{display:inline-block;padding:11px 22px;border-radius:30px;border:none;cursor:pointer;font-family:'Lato',sans-serif;font-size:.87rem;font-weight:700;transition:all .3s ease;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 3px 8px rgba(0,0,0,0.1)}
+.btn-primary{background:var(--forest-l);color:var(--cream)}
+.btn-primary:hover{background:var(--sage);transform:translateY(-2px)}
+.btn-gold{background:var(--gold);color:var(--dark)}
+.btn-gold:hover{background:var(--gold-l);transform:translateY(-2px)}
+.btn-outline{background:transparent;border:2px solid var(--forest-l);color:var(--forest)}
+.btn-outline:hover{background:var(--forest-l);color:var(--cream)}
+.btn-sm{padding:7px 16px;font-size:.78rem}
+.btn-danger{background:#5c1a1a;color:var(--red)}
+.btn-danger:hover{background:#7a2020}
+.btn-info{background:#1a3a5c;color:white}
+input,select,textarea{width:100%;padding:11px 13px;border:2px solid #d5cbb8;border-radius:var(--radius);font-family:inherit;font-size:.93rem;background:var(--white);transition:var(--transition);color:#1a1a1a}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px rgba(201,168,76,0.2)}
+label{display:block;font-weight:600;margin-bottom:4px;color:var(--forest);font-size:.84rem}
+.form-group{margin-bottom:13px}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+#toast-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+.toast{padding:14px 22px;border-radius:28px;font-size:.88rem;box-shadow:var(--shadow);animation:toastIn .45s ease,toastOut .4s ease 2.8s forwards;font-weight:600;max-width:320px}
+.toast.success{background:var(--forest-m);color:var(--cream)}
+.toast.error{background:#5c1a1a;color:#fca5a5}
+.toast.info{background:#1a3a5c;color:#bfdbfe}
+@keyframes toastIn{from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateY(-20px)}}
+/* Modal */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9998;display:none;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--white);border-radius:var(--radius);padding:28px;max-width:520px;width:93%;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.35);position:relative}
+/* Stars */
+.stars-input{display:flex;gap:6px;font-size:2rem;cursor:pointer;justify-content:center;margin:12px 0}
+.star-btn{color:#d0c8b0;transition:.2s;background:none;border:none;cursor:pointer;font-size:2rem;padding:0}
+.star-btn.active{color:var(--gold)}
+/* Messages */
+.msg-area{display:flex;flex-direction:column;gap:8px;padding:16px;height:340px;overflow-y:auto;background:#f8f5ee;border-radius:var(--radius)}
+.msg-bubble{max-width:72%;padding:10px 16px;border-radius:18px;font-size:.88rem;word-break:break-word}
+.msg-bubble.sent{background:var(--forest-l);color:white;align-self:flex-end;border-bottom-right-radius:4px}
+.msg-bubble.received{background:#e8e4dc;color:#333;align-self:flex-start;border-bottom-left-radius:4px}
+.msg-meta{font-size:.7rem;opacity:.65;margin-top:3px}
+/* RDV cards */
+.rdv-card{background:white;border-radius:var(--radius);padding:14px 18px;margin:8px 0;border-left:4px solid var(--mint);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.rdv-card.confirmed{border-color:var(--sage)}
+.rdv-card.reported{border-color:var(--gold)}
+.rdv-card.pending{border-color:var(--mint)}
+/* Profile */
+.profile-photo-circle{width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);display:block}
+.profile-photo-placeholder{width:90px;height:90px;border-radius:50%;background:var(--forest-m);display:flex;align-items:center;justify-content:center;font-size:2.2rem;border:3px solid var(--gold)}
+/* Creation */
+.creation-card{background:white;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(201,168,76,0.2)}
+.creation-card img{width:100%;height:150px;object-fit:cover}
+.creation-card .creation-body{padding:12px}
+/* Star display */
+.star-display{color:var(--gold);letter-spacing:1px}
+/* Guide nav */
+.guide-nav-btn{display:block;width:100%;text-align:left;padding:13px 20px;background:transparent;border:none;color:var(--muted);cursor:pointer;font-family:'Lato',sans-serif;font-size:.9rem;transition:.2s;border-left:3px solid transparent}
+.guide-nav-btn:hover,.guide-nav-btn.active{background:var(--forest-m);color:var(--gold);border-left-color:var(--gold)}
+/* Stat card */
+.stat-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius);padding:22px;text-align:center;transition:.3s}
+.stat-card:hover{background:rgba(255,255,255,0.1);transform:translateY(-3px)}
+.stat-icon{font-size:2rem;margin-bottom:8px}
+.stat-num{font-size:2.2rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--gold)}
+.stat-label{font-size:.82rem;color:var(--muted);margin-top:4px}
+/* Thread list */
+.thread-item{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.08);cursor:pointer;transition:.2s;display:flex;align-items:center;gap:10px}
+.thread-item:hover,.thread-item.active{background:rgba(255,255,255,0.1)}
+/* Support */
+.support-item{background:rgba(255,255,255,0.05);border-radius:var(--radius);padding:16px;margin-bottom:12px;border:1px solid rgba(201,168,76,0.15)}
+.support-item h4{color:var(--gold);margin-bottom:6px}
+.support-item p{color:var(--muted);font-size:.9rem}
+/* Tag */
+.tag{display:inline-block;background:var(--forest-m);color:var(--mint);border-radius:20px;padding:3px 12px;font-size:.78rem;font-weight:600}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <div class="logo" onclick="navigate('accueil')">
+    <span class="tifinagh">ⵜⴰⵡⵓⵔⵉ</span><span class="brand">TAWURI</span>
+  </div>
+  <div class="nav-links" id="nav-links"></div>
+  <div class="auth-area" id="auth-area"></div>
+</nav>
+<main id="main-content"></main>
+<div id="toast-container"></div>
+<div id="modal-overlay" class="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box" id="modal-box"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// CONSTANTS
+// ══════════════════════════════════════════════
+const ARTISANAT_LABELS={poterie:'🏺 Poterie',tissage:'🪡 Tissage / Tapis',bijoux:'🪙 Bijouterie',bois:'🪵 Bois sculpté',maroquinerie:'🎨 Maroquinerie',zellige:'🪔 Zellige'};
+const SPECIALITES=Object.values(ARTISANAT_LABELS);
+const VILLES=['Marrakech','Fès','Rabat','Agadir','Ouarzazate','Tiznit','Essaouira','Casablanca'];
+
+// Pas d'artisans prédéfinis — la liste est vide au départ.
+
+const GUIDE_CONTENT={
+  poterie:{emoji:"🏺",nom:"La Poterie Marocaine",couleur:"#8B4513",couleur2:"#D2691E",
+    histoire:"La poterie marocaine est l'une des formes d'artisanat les plus anciennes du Maroc, avec des traces archéologiques remontant à plus de 5 000 ans, dès le Néolithique. Dans les sites préhistoriques de la région d'Ifrane et du Kef-el-Ghar, les fouilles ont mis au jour des fragments de céramique à décor incisé témoignant d'une maîtrise précoce de l'argile. Avec l'arrivée des Phéniciens au IXe siècle av. J.-C., puis des Romains qui fondèrent Volubilis, les techniques se diversifient — le tour rapide fait son apparition, bouleversant la production artisanale. Durant la période islamique, Fès s'impose comme capitale de la céramique émaillée. Sous les Idrissides (IXe siècle), des ateliers spécialisés se multiplient dans le quartier d'Ain Khail. Sous les Mérinides (XIIIe–XVe siècle), naît la célèbre faïence bleue au cobalt importé d'Iran. Dans le Rif et le Haut Atlas, ce sont essentiellement les femmes berbères qui perpétuent cet art sacré, façonnant l'argile à la main selon des gestes transmis depuis des millénaires.",
+    histoire_suite:"Au XVIe siècle, l'expulsion des Morisques d'Espagne amène au Maroc des milliers d'artisans andalous porteurs de nouvelles techniques : l'émail stannifère blanc, les décors floraux raffinés. Safi devient la capitale de la polychromie. Aujourd'hui, la poterie marocaine vit une renaissance remarquable : les jeunes potiers s'approprient l'héritage ancestral tout en l'enrichissant d'influences contemporaines. Les coopératives de femmes du Haut Atlas exportent leurs créations dans les galeries de Paris, New York et Tokyo.",
+    techniques:"L'argile rouge de Safi produit une terracotta chaude. L'argile blanche calcaire de Fès est idéale pour les émaux opaques. Le façonnage se décline en colombinage, modelage au tour (dawwara) et moulage par pression. La cuisson dans les fours traditionnels à bois (furn) à 700–950°C transforme l'argile en céramique ; une deuxième cuisson à 1050°C vitrifie les émaux.",
+    symbolisme:"Le losange (tafout) symbolise le soleil et la fertilité. Le triangle (iziker) représente la montagne. Le zigzag (zfek) évoque l'eau. La main de Fatima (khamsa) repousse le mauvais œil. L'étoile à 8 branches représente les 8 portes du paradis. Le bleu cobalt évoque le ciel divin ; le vert sacré est la couleur du Prophète.",
+    conservation:"Nettoyage : eau tiède + savon neutre, jamais d'abrasifs. Les pièces non vernissées sont poreuses : évitez les liquides acides. Les tagines doivent être culottés avant la première utilisation : 12h dans l'eau froide, frotter d'huile d'olive, chauffer à feu doux 2h. Stockez à l'abri des chocs thermiques.",
+    outils:[["🔄 Tour de potier (dawwara)","Façonnage rapide et symétrique."],["🪨 Galets de polissage","Brillance naturelle avant cuisson."],["🔥 Four traditionnel (furn)","700–950 °C, bois ou gaz."],["🖌️ Pinceaux en poils naturels","Application des pigments."],["📐 Moules en plâtre","Formes répétitives (tagines, assiettes)."],["⚗️ Pigments naturels","Cobalt, oxyde de cuivre, oxyde de fer."]],
+    regions:[["🌿 Fès","Quartier Ain Khail — 400+ ateliers, faïence bleue légendaire."],["🌸 Safi","Céramiques polychromes aux motifs floraux depuis le XVIe siècle."],["🟢 Tamegroute","Poterie au vert profond unique, oxydes de manganèse locaux."],["🏔️ Haut Atlas","Poterie berbère façonnée par les femmes, non vernissée."],["🌺 Marrakech","Fusion andalouse-berbère, souk des potiers très actif."]],
+    tawuri:"Sur TAWURI, Fatima Ouhaddou vous accueille dans son atelier de Marrakech. Maîtresse potière depuis 20 ans, elle propose des séances d'initiation de 2 à 3 heures. Réservez depuis Explorer → Poterie."
+  },
+  tissage:{emoji:"🪡",nom:"Le Tissage Marocain",couleur:"#722F37",couleur2:"#C84B31",
+    histoire:"Le tissage est pratiqué depuis plus de 4 000 ans par les Berbères du Haut Atlas. Le tapis marocain est le récit d'une vie, d'une lignée, d'un territoire — chaque symbole tissé a une signification précise. Sous les Dynasties Mérinides et Saâdiennes, le tissage connaît son apogée à Rabat grâce aux artisans andalous. Le tapis de Rabat devient l'un des objets les plus prisés des cours royales européennes.",
+    histoire_suite:"Au XXe siècle, des coopératives féminines sont établies dans les régions reculées du Haut Atlas, offrant aux femmes des revenus directs. Aujourd'hui, les tapis de Beni Ouarain ou d'Azilal se vendent dans les galeries de design de Paris, Los Angeles et Tokyo.",
+    techniques:"La laine de mouton (taghatt) est lavée, cardée, puis filée au fuseau (taghzalt). La teinture végétale précède le tissage : garance (rouge), indigo (bleu), henné (orangé). Le nœud berbère (asymétrique) est le plus répandu dans le Haut Atlas. La densité varie entre 40 000 et 400 000 nœuds par m².",
+    symbolisme:"Le losange central (tafout) représente la femme créatrice. Les zigzags (zfek) évoquent l'eau. Les étoiles (itran) protègent contre le mauvais œil. Les mains de Fatima sont tissées dans les tapis de mariage pour protéger le nouveau foyer.",
+    conservation:"Aspirez dans le sens du poil une fois par semaine. Tournez le tapis de 180° tous les six mois pour une usure uniforme. Protégez des UV directs. En cas de tache liquide : tamponnez immédiatement, saupoudrez de sel, aspirez après 2h. Lavage annuel par un professionnel.",
+    outils:[["🧶 Métier à tisser horizontal","Traditionnel, pliable, nomade."],["🪡 Navette (taqqit)","Passe la trame entre les fils."],["🪮 Peigne de tissage (mdigg)","Tasse les nœuds pour une texture dense."],["🐑 Cardes à laine","Démêlent les fibres avant le filage."],["🔄 Fuseau (taghzalt)","File la laine en fil régulier."],["✂️ Ciseaux de tonte","Égalisent la hauteur du velours."]],
+    regions:[["🏔️ Beni Ouarain","Tapis ivoire à motifs noirs géométriques, très prisés à l'international."],["🌄 Taznakht","Centre de coopératives féminines, motifs colorés sur fond rouge."],["🏛️ Rabat","Tapis de ville à nœuds symétriques, héritage andalou."],["⛰️ Haut Atlas","Tapis polychromes aux couleurs vives."],["🌿 Azilal","Tapis expressifs abstraits très recherchés des collectionneurs."]],
+    tawuri:"Sur TAWURI, Hassan Ait Ben vous initie aux secrets du métier à tisser. En 3 à 4 heures, vous apprendrez le nœud berbère. Réservez via Explorer → Tissage."
+  },
+  bijoux:{emoji:"🪙",nom:"La Bijouterie Marocaine",couleur:"#1a3a5c",couleur2:"#2e6da4",
+    histoire:"La bijouterie marocaine couvre plus de trois millénaires. Les premières parures remontent au IIIe millénaire av. J.-C. (grottes d'Ifri n'Ammar). Avec l'islamisation, la prohibition de la représentation figurative oriente toute la création vers la géométrie pure. Tiznit est la capitale nationale du bijou en argent.",
+    histoire_suite:"Les Saâdiens marquent l'apogée de la bijouterie de cour. Les femmes amazighes portent leurs bijoux d'argent comme marqueurs d'identité culturelle. Aujourd'hui, une nouvelle génération d'orfèvres associe techniques ancestrales et formes contemporaines.",
+    techniques:"L'argent 999/1000 est travaillé par ciselure (naqqche), filigrane (sharabia), granulation, repoussé (tikniwt) et niello (khal). L'émaillage cloisonné, héritage andalou, remplit des alvéoles métalliques d'émaux colorés cuits au four.",
+    symbolisme:"La fibule (tizerzaï) — forme circulaire — symbolise le soleil. La khamsa protège des cinq sens contre le mauvais œil. Le corail rouge évoque le sang et la vie. L'ambre absorbe les énergies négatives. Les inscriptions coraniques gravées en font de véritables boucliers spirituels.",
+    conservation:"Argent : nettoyez au bicarbonate + eau tiède, séchez immédiatement. Rangez dans des sachets en flanelle. Évitez contact avec parfums. Corail : eau tiède douce uniquement. Ambre : chiffon légèrement humide, quelques gouttes d'huile d'olive pour raviver l'éclat.",
+    outils:[["⚒️ Burin (mikchach)","Grave le métal à froid en motifs géométriques."],["🔨 Marteau d'orfèvre","Façonne et courbe les feuilles de métal."],["🔧 Étau de bijoutier","Maintient la pièce immobile."],["🔥 Chalumeau de soudure","Assemble par soudure à l'argent."],["🪨 Pierre de touche","Vérifie la pureté du métal."],["📐 Lime et abrasif","Polissent la surface."]],
+    regions:[["🌿 Tiznit","Capitale du bijou argent, souk des orfèvres mondialement connu."],["🏔️ Anti-Atlas","Bijoux archaïques en argent massif berbère."],["🌺 Marrakech","Bijoux urbains, mêlant or, argent, ambre, grenat."],["🌸 Fès","Bijouterie en or filigrane très fin, héritage andalou."],["🏝️ Taroudant","Bijoux nomades avec corail rouge et dattes d'argent."]],
+    tawuri:"Sur TAWURI, Malika Berrada à Tiznit vous initie au martelage et à la ciselure. Réservez via Explorer → Bijouterie."
+  },
+  bois:{emoji:"🪵",nom:"Le Bois Sculpté",couleur:"#3B2314",couleur2:"#7B5E3B",
+    histoire:"La mosquée Qarawiyyin de Fès (fondée en 859) possède des boiseries sculptées d'une complexité géométrique stupéfiante. Sous les Almoravides, les artisans andalous apportent la technique du moucharabieh. Les Mérinides portent la sculpture sur bois à son sommet absolu.",
+    histoire_suite:"Essaouira développe au XVIIIe siècle la marqueterie de thuya (Tetraclinis articulata). Deux siècles plus tard, la ville compte 800+ ateliers. Les jeunes menuisiers associent techniques ancestrales et designs contemporains pour séduire les marchés de design international.",
+    techniques:"Le thuya d'Essaouira — très dense, imputrescible, parfumé — présente des veines naturelles d'une beauté rare. Le cèdre de l'Atlas orne les plafonds des palais royaux. La marqueterie (tarsia) assemble des fragments contrastés selon des motifs géométriques élaborés. Le moucharabieh assemble des centaines de pièces tournées sans colle ni clous.",
+    symbolisme:"L'étoile à 8 branches (khatam Suleïman) : 8 portes du paradis. Les entrelacs infinis (twassel) évoquent l'unicité divine. La rosace (wardiyya) est une métaphore du soleil rayonnant. Les calligraphies coufiques inscrivent physiquement la parole divine dans l'espace.",
+    conservation:"Thuya : cire d'abeille naturelle deux fois par an, dans le sens du grain. Cèdre peint : pinceau sec uniquement — jamais d'eau sur les peintures. Contre les xylophages : xylophène injecté en cas d'infestation, traitement préventif tous les 5 ans. Protéger des UV.",
+    outils:[["🪚 Scie à chantourner","Découpe les formes complexes."],["🔨 Maillet de sculpteur","Frappe les ciseaux pour enlever la matière."],["🪛 Ciseaux à bois","Ciselure et reliefs."],["🔄 Tour à bois","Tournage des colonnes et objets cylindriques."],["🪵 Rabot","Aplanie et lisse les surfaces."],["✨ Cire d'abeille","Finalise et protège le bois."]],
+    regions:[["🌊 Essaouira","Capitale de la marqueterie de thuya — 800+ ateliers."],["🌸 Fès","Plafonds à caissons en cèdre peint, moucharabiehs monumentaux."],["🌺 Marrakech","Portes en noyer sculpté, meubles incrustés."],["🏛️ Tétouan","Boiseries peintes de tradition andalouse."],["⛰️ Ifrane","Menuiserie en cèdre pour chalets et mobilier d'altitude."]],
+    tawuri:"Sur TAWURI, Youssef Marrakchi vous guide dans la création de votre première pièce sculptée. Réservez via Explorer → Bois sculpté."
+  },
+  maroquinerie:{emoji:"🎨",nom:"La Maroquinerie Marocaine",couleur:"#3B1F0A",couleur2:"#8B4513",
+    histoire:"La tannerie Chouara de Fès, fondée au XIe siècle sous les Almoravides, est l'un des sites industriels les plus anciens du monde. Le cuir marocain (maroquin) a donné son nom à une industrie mondiale. Louis XIV possédait plusieurs centaines de volumes reliés en maroquin de Fès.",
+    histoire_suite:"Aujourd'hui, des marques mondiales (Hermès, Louis Vuitton, Gucci) font appel aux tanneries marocaines pour leur savoir-faire unique en tannage végétal. La babouche (belgha) reste l'export le plus emblématique.",
+    techniques:"Le tannage végétal de Fès : trempage en chaux vive (7 jours), déchaullage à l'ammoniaque de pigeon, tannage dans des cuves de tan de mimosa (15–30 jours). La teinture naturelle (safran, indigo, grenade) donne des couleurs impossibles à reproduire industriellement. Le repoussé, la broderie d'or (tatriz) et la pyrogravure complètent les techniques décoratives.",
+    symbolisme:"Le jaune safran de la babouche fassia signale l'appartenance à la bourgeoisie citadine. Le rouge vif est réservé aux cérémonies. La babouche sans talon est une invitation à la lenteur et à l'hospitalité.",
+    conservation:"Nettoyage avec un chiffon légèrement humide. Nourrissage bimestriel avec une crème à base de lanoline. En cas de mouillage : séchage à l'air — jamais de chaleur directe. Rayures légères : frottez avec le doigt, la chaleur corporelle suffit souvent. Rangez bourrés de papier de soie.",
+    outils:[["🧵 Aiguille de sellier","Piquage à la main du cuir épais."],["🔪 Tranchet","Découpe le cuir selon les gabarits."],["🪨 Poinçon à tracer","Marque les lignes de couture."],["🔨 Maillet en bois","Grave les motifs en relief."],["📐 Gabarits de découpe","Assurent la régularité."],["✨ Cire de finition","Protège et nourrit le cuir."]],
+    regions:[["🌸 Fès","Tannerie Chouara — patrimoine mondial, 50% du cuir marocain."],["🌺 Marrakech","Souk des babouchiers, capitale des poufs et sacs végétaux."],["🏛️ Rabat","Maroquinerie fine pour l'administration royale."],["🌿 Meknès","Cuir de chèvre pour reliures coraniques et portefeuilles."],["🏔️ Tétouan","Broderie sur cuir héritée des artisans andalous."]],
+    tawuri:"Sur TAWURI, Omar Benali vous initie au travail du cuir tanné végétal. Réservez via Explorer → Maroquinerie."
+  },
+  zellige:{emoji:"🪔",nom:"Le Zellige Marocain",couleur:"#0d4f3c",couleur2:"#1a8a6e",
+    histoire:"Né en Andalousie sous le califat de Cordoue, le zellige fut introduit au Maroc par les Almoravides et perfectionné sous les Mérinides à un niveau de complexité mathématique jamais atteint. La médersa Bou Inania de Fès (1350–1357) en est le chef-d'œuvre absolu.",
+    histoire_suite:"Inscrit au patrimoine culturel immatériel de l'UNESCO en 2014, le zellige connaît une renaissance mondiale. La Grande Mosquée Hassan II de Casablanca (1993) couvre plus de 10 000 m² de mosaïques.",
+    techniques:"L'argile blanche calcaire de Fès est mise en plaques 10×10 cm et séchée 5–7 jours. Première cuisson à 950–1050°C (biscuit). Application des émaux (mina) : cobalt, cuivre, antimoine, manganèse, étain. Deuxième cuisson à 850–950°C. Découpe à la marteline (ta'jira) en 30+ formes géométriques standards.",
+    symbolisme:"L'entrelacs infini (twassel) évoque le tawhid (unicité divine). L'étoile à 8 branches est le symbole central. Le vert sacré (akhdar) est la couleur du Prophète. Contempler un panneau de zellige est une méditation silencieuse.",
+    conservation:"Nettoyage : eau chaude + savon neutre (pH 7) + brosse douce, séchage immédiat. Évitez absolument les produits acides. Protection annuelle avec cire pour marbre calcaire. Réparation : artisan zelligiste uniquement, mortier de chaux compatible.",
+    outils:[["🔨 Marteline (ta'jira)","Marteau-ciseau pour tailler les tesselles."],["📐 Gabarits de forme","Modèles pour les 30+ formes géométriques."],["🪣 Mortier de chaux","Jointoiement et fixation."],["📏 Niveau et équerre","Planéité parfaite des panneaux."],["🎨 Émaux colorés (mina)","Cobalt, cuivre, antimoine, manganèse."],["🔥 Four à faïence","Double cuisson pour fixer les émaux."]],
+    regions:[["🌸 Fès","Quartier Ain Nokbi — 200+ ateliers de zelligistes."],["🏛️ Meknès","Zellige royal des mausolées et portes monumentales."],["🌊 Casablanca","Grande Mosquée Hassan II — zellige moderne."],["🌺 Marrakech","Zellige des palais et riads, associé au tadelakt."],["🏛️ Rabat","Tour Hassan, institutions officielles."]],
+    tawuri:"Sur TAWURI, Aicha Tafoukt vous fait découvrir cet art fascinant. Réservez via Explorer → Zellige."
+  }
+};
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let state={
+  currentUser:null,users:[],
+  artisans:[],
+  rdvs:[],evaluations:[],creations:[],
+  messages:{},statuts:{},
+  guideActif:true,guideData:JSON.parse(JSON.stringify(GUIDE_CONTENT))
+};
+let navParams={};
+let pendingVerif=null; // {code, userData}
+
+function loadState(){
+  try{
+    const s=localStorage.getItem('tawuri_v2');
+    if(s){
+      const p=JSON.parse(s);
+      state.currentUser=p.currentUser||null;
+      state.users=p.users||[];
+      state.artisans=p.artisans||state.artisans;
+      state.rdvs=p.rdvs||[];
+      state.evaluations=p.evaluations||[];
+      state.creations=p.creations||[];
+      state.messages=p.messages||{};
+      state.statuts=p.statuts||{};
+      state.guideActif=p.guideActif!==undefined?p.guideActif:true;
+      state.guideData=p.guideData||state.guideData;
+    }
+  }catch(e){}
+}
+function saveState(){
+  try{
+    const toSave={
+      currentUser:state.currentUser,users:state.users,artisans:state.artisans,
+      rdvs:state.rdvs,evaluations:state.evaluations,creations:state.creations,
+      messages:state.messages,statuts:state.statuts,
+      guideActif:state.guideActif,guideData:state.guideData
+    };
+    localStorage.setItem('tawuri_v2',JSON.stringify(toSave));
+  }catch(e){showToast('⚠️ Espace de stockage insuffisant pour les images.','error');}
+}
+loadState();
+
+// ══════════════════════════════════════════════
+// UTILITIES
+// ══════════════════════════════════════════════
+function showToast(msg,type='success'){
+  const c=document.getElementById('toast-container');
+  const t=document.createElement('div');t.className=`toast ${type}`;t.textContent=msg;c.appendChild(t);
+  setTimeout(()=>t.remove(),3400);
+}
+function esc(s){if(!s)return'';const d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
+function san(s){return String(s).replace(/[<>"']/g,'').trim();}
+function gCode(){return String(Math.floor(100000+Math.random()*900000));}
+function getThreadId(a,b){return[a,b].sort().join('|||');}
+function fmtDate(ts){if(!ts)return'';const d=new Date(ts);return d.toLocaleDateString('fr-MA',{day:'2-digit',month:'2-digit',year:'numeric'})+' '+d.toLocaleTimeString('fr-MA',{hour:'2-digit',minute:'2-digit'});}
+function fmtDay(ts){if(!ts)return'';return new Date(ts).toLocaleDateString('fr-MA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function getAvgRating(artisanEmail){
+  const evs=state.evaluations.filter(e=>e.artisanEmail===artisanEmail);
+  if(!evs.length)return null;
+  return(evs.reduce((s,e)=>s+e.note,0)/evs.length).toFixed(1);
+}
+function renderStars(n){return'★'.repeat(Math.round(n))+'☆'.repeat(5-Math.round(n));}
+function isBlocked(email){return state.statuts[email]==='Bloqué';}
+function isRestricted(email){return state.statuts[email]==='Restreint';}
+function getStatus(email){return state.statuts[email]||'Actif';}
+function resizeImage(file,maxW,cb){
+  const r=new FileReader();
+  r.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      const ratio=Math.min(maxW/img.width,maxW/img.height,1);
+      const c=document.createElement('canvas');
+      c.width=img.width*ratio;c.height=img.height*ratio;
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      cb(c.toDataURL('image/jpeg',0.7));
+    };img.src=e.target.result;
+  };r.readAsDataURL(file);
+}
+
+// ══════════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════════
+function showModal(html){
+  document.getElementById('modal-box').innerHTML=html;
+  document.getElementById('modal-overlay').classList.add('active');
+}
+window.closeModal=function(){document.getElementById('modal-overlay').classList.remove('active');}
+function handleOverlayClick(e){if(e.target.id==='modal-overlay')closeModal();}
+
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+window.navigate=function(page,params={}){
+  navParams=params;
+  const main=document.getElementById('main-content');main.innerHTML='';
+  const div=document.createElement('div');div.className='page active';div.id='page-'+page;main.appendChild(div);
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+  const R={
+    accueil:renderAccueil,profil:renderProfil,monprofil:renderMonProfil,
+    explore:renderExplore,'artisan-profil':renderArtisanProfilePage,
+    msg:renderMessagerie,dashboard:renderDashboard,guide:renderGuide,
+    calendrier:renderCalendrier,catalogue:renderCatalogue,support:renderSupport,admin:renderAdmin
+  };
+  if(R[page])R[page](div);
+  updateNav();window.scrollTo({top:0,behavior:'smooth'});
+};
+
+function getNavPages(){
+  const u=state.currentUser;
+  if(!u)return[['🏠 Accueil','accueil'],['🔭 Explorer','explore'],['📖 Guide','guide']];
+  if(u.role==='admin')return[['🏠 Accueil','accueil'],['⚙️ Administration','admin']];
+  if(u.role==='artisan')return[['🏠 Accueil','accueil'],['👤 Mon Profil','monprofil'],['📅 Calendrier','calendrier'],['🗂️ Catalogue','catalogue'],['💬 Messagerie','msg'],['📊 Tableau de bord','dashboard'],['🛠️ Support','support']];
+  return[['🏠 Accueil','accueil'],['👤 Mon Profil','monprofil'],['🔭 Explorer','explore'],['💬 Messagerie','msg'],['📊 Tableau de bord','dashboard'],['📖 Guide','guide']];
+}
+
+function updateNav(){
+  const nl=document.getElementById('nav-links'),aa=document.getElementById('auth-area'),u=state.currentUser;
+  nl.innerHTML=getNavPages().map(([l,p])=>`<button data-page="${p}" onclick="navigate('${p}')">${l}</button>`).join('');
+  if(u){
+    aa.innerHTML=`<span class="user-badge">${u.avatar||'👤'} ${esc(u.nom)}</span><button onclick="doLogout()">Déconnexion</button>`;
+  }else{
+    aa.innerHTML=`<button onclick="navigate('profil')">🔒 Connexion</button><button onclick="adminLogin()" style="background:rgba(201,168,76,0.2);color:var(--gold);">👑 Admin</button>`;
+  }
+  document.querySelectorAll('.nav-links button').forEach(b=>{
+    const cur=document.getElementById('main-content')?.firstChild?.id?.replace('page-','');
+    b.classList.toggle('active',b.dataset.page===cur);
+  });
+}
+window.doLogout=function(){
+  state.currentUser=null;saveState();updateNav();showToast('👋 Déconnecté(e)');navigate('accueil');
+};
+window.adminLogin=function(){
+  showModal(`
+  <div style="text-align:center;">
+    <div style="font-size:2.5rem;margin-bottom:10px;">👑</div>
+    <h3 style="color:var(--forest);margin-bottom:8px;">Accès Administrateur</h3>
+    <p style="color:#666;font-size:.88rem;margin-bottom:16px;">Entrez le code administrateur pour continuer.</p>
+    <div class="form-group">
+      <input type="password" id="admin-code-input" placeholder="Code administrateur" style="text-align:center;font-size:1.1rem;letter-spacing:4px;" autofocus>
+    </div>
+    <div id="admin-login-error" style="color:#e53e3e;font-size:.83rem;min-height:20px;margin-bottom:8px;"></div>
+    <div style="display:flex;gap:8px;margin-top:8px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="submitAdminCode()">Entrer →</button>
+    </div>
+  </div>`);
+  setTimeout(()=>{
+    const inp=document.getElementById('admin-code-input');
+    if(inp){
+      inp.focus();
+      inp.addEventListener('keydown',e=>{if(e.key==='Enter')submitAdminCode();});
+    }
+  },100);
+};
+window.submitAdminCode=function(){
+  const inp=document.getElementById('admin-code-input');
+  if(!inp)return;
+  const code=inp.value;
+  if(code==='admin2026'){
+    state.currentUser={nom:'Admin',email:'admin@tawuri.ma',role:'admin',avatar:'👑'};
+    saveState();updateNav();closeModal();showToast('🔓 Accès administrateur');navigate('admin');
+  }else{
+    const err=document.getElementById('admin-login-error');
+    if(err)err.textContent='❌ Code incorrect. Réessayez.';
+    inp.value='';inp.focus();
+  }
+};
+
+// ══════════════════════════════════════════════
+// ACCUEIL
+// ══════════════════════════════════════════════
+function renderAccueil(container){
+  container.innerHTML=`
+  <div style="background:linear-gradient(135deg,#1a3a2a,#0d1f17);color:var(--cream);padding:80px 20px;text-align:center;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=1200&q=80') center/cover;opacity:.15;z-index:0;"></div>
+    <div style="position:relative;z-index:1;max-width:800px;margin:0 auto;">
+      <div style="font-family:'Playfair Display',serif;font-size:3.5rem;color:var(--gold);text-shadow:0 0 20px rgba(201,168,76,0.5);">ⵜⴰⵡⵓⵔⵉ</div>
+      <h1 style="font-size:2.6rem;margin:10px 0;letter-spacing:5px;">L'Artisanat à portée de main</h1>
+      <p style="font-style:italic;color:var(--mint);margin:8px 0 6px;">"Chaque geste est un héritage, chaque création est une âme."</p>
+      <p style="color:var(--muted);max-width:580px;margin:0 auto 32px;">Connectez-vous avec les maîtres artisans du Maroc. Apprenez, créez, transmettez.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="navigate('explore')">🔭 Explorer les artisans</button>
+        <button class="btn btn-gold" onclick="navigate('guide')">📖 Découvrir le Guide</button>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1200px;margin:50px auto;padding:0 22px;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <p style="color:var(--gold);font-size:.78rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">LES ARTS MAROCAINS</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--forest);">Notre Patrimoine</h2>
+    </div>
+    <div class="grid-3">
+      ${Object.entries(ARTISANAT_LABELS).map(([key,label],i)=>`
+        <div onclick="navigate('guide')" style="background:var(--forest);border-radius:var(--radius);padding:28px 20px;text-align:center;cursor:pointer;transition:all .3s ease;border:1px solid rgba(201,168,76,0.18);"
+             onmouseover="this.style.transform='translateY(-6px)';this.style.borderColor='var(--gold)'"
+             onmouseout="this.style.transform='translateY(0)';this.style.borderColor='rgba(201,168,76,0.18)'">
+          <div style="width:68px;height:68px;background:rgba(255,255,255,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.9rem;border:1px solid rgba(201,168,76,0.25);">${label.split(' ')[0]}</div>
+          <h3 style="color:var(--cream);margin-bottom:6px;font-size:1.1rem;">${label.split(' ').slice(1).join(' ')}</h3>
+          <p style="color:var(--muted);font-size:.85rem;">${['Art ancestral façonné à la main, motifs tifinagh.','Tapis et tapisseries aux symboles traditionnels.','Argent, corail, ambre — orfèvrerie du Souss.','Thuya et cèdre ciselés d\'Essaouira.','Cuir tanné selon des procédés millénaires.','Mosaïques de faïence, signature de Fès.'][i]}</p>
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════
+// AUTH (PROFIL PAGE)
+// ══════════════════════════════════════════════
+function renderProfil(container){
+  if(state.currentUser){navigate('monprofil');return;}
+  let tab='inscription',role='etudiant';
+  const re=()=>{
+    container.innerHTML=`
+    <div style="max-width:700px;margin:40px auto;padding:0 20px;">
+      <div style="display:flex;gap:6px;margin-bottom:4px;">
+        <button class="btn ${tab==='inscription'?'btn-gold':'btn-outline'}" id="ti" style="flex:1;">S'inscrire</button>
+        <button class="btn ${tab==='connexion'?'btn-gold':'btn-outline'}" id="tc" style="flex:1;">Se connecter</button>
+      </div>
+      <div class="card" id="tab-content"></div>
+    </div>`;
+    document.getElementById('ti').onclick=()=>{tab='inscription';re();};
+    document.getElementById('tc').onclick=()=>{tab='connexion';re();};
+    const tc=document.getElementById('tab-content');
+    if(tab==='inscription'){renderInscription(tc,role,r=>{role=r;re();});}
+    else renderConnexion(tc);
+  };re();
+}
+
+function renderInscription(tc,role,setRole){
+  tc.innerHTML=`
+  <h3 style="margin-bottom:14px;color:var(--forest);">✨ Créer un compte</h3>
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <button class="btn ${role==='etudiant'?'btn-gold':'btn-outline'} btn-sm" id="re">🧑‍🎓 Étudiant</button>
+    <button class="btn ${role==='artisan'?'btn-gold':'btn-outline'} btn-sm" id="ra">🏺 Artisan</button>
+  </div>
+  ${role==='etudiant'?`
+    <div class="form-group"><label>Nom complet *</label><input id="rn" placeholder="Votre nom complet"></div>
+    <div class="form-group"><label>Adresse email *</label><input type="email" id="re2" placeholder="exemple@email.com"></div>
+    <div class="form-group"><label>Mot de passe *</label><input type="password" id="rp" placeholder="Minimum 6 caractères"></div>
+    <div class="form-group"><label>Ville *</label><select id="rv">${VILLES.map(v=>`<option>${v}</option>`).join('')}</select></div>
+  `:`
+    <div class="form-group"><label>Nom complet *</label><input id="rn" placeholder="Votre nom complet"></div>
+    <div class="form-group"><label>Numéro de téléphone *</label><input id="rt" placeholder="06XXXXXXXX"></div>
+    <div class="form-group"><label>Ville *</label><select id="rv">${VILLES.map(v=>`<option>${v}</option>`).join('')}</select></div>
+    <div class="form-group"><label>Adresse de l'atelier *</label><input id="rad" placeholder="Souk, quartier, médina..."></div>
+    <div class="form-group"><label>Spécialité *</label><select id="rs">${SPECIALITES.map(s=>`<option>${s}</option>`).join('')}</select></div>
+    <div class="form-group"><label>Mot de passe *</label><input type="password" id="rp" placeholder="Minimum 6 caractères"></div>
+  `}
+  <button class="btn btn-primary" style="width:100%;" id="rb">Créer mon compte →</button>`;
+  document.getElementById('re').onclick=()=>setRole('etudiant');
+  document.getElementById('ra').onclick=()=>setRole('artisan');
+  document.getElementById('rb').onclick=()=>{
+    const nom=san(document.getElementById('rn').value);
+    const pwd=document.getElementById('rp').value;
+    if(!nom||pwd.length<6){showToast('⚠️ Remplissez tous les champs (mdp min. 6 caractères).','error');return;}
+    if(role==='etudiant'){
+      const email=san(document.getElementById('re2').value.toLowerCase());
+      if(!email.includes('@')||!email.includes('.')){showToast('⚠️ Email invalide.','error');return;}
+      if(state.users.find(u=>u.email===email)||state.artisans.find(a=>a.email===email)){showToast('⚠️ Cet email est déjà utilisé.','error');return;}
+      const ville=document.getElementById('rv').value;
+      const userData={nom,email,ville,pwd,role:'etudiant',avatar:'🧑‍🎓',photo:'',creations:[],dateInscription:Date.now()};
+      state.users.push(userData);state.currentUser=userData;
+      saveState();updateNav();
+      showToast(`✅ Compte créé ! Bienvenue, ${nom} !`);navigate('dashboard');
+    }else{
+      const tel=san(document.getElementById('rt').value);
+      if(!tel||tel.length<9){showToast('⚠️ Téléphone invalide.','error');return;}
+      if(state.artisans.find(a=>a.tel===tel)){showToast('⚠️ Ce numéro est déjà utilisé.','error');return;}
+      const ville=document.getElementById('rv').value;
+      const adresse=san(document.getElementById('rad').value);
+      const spec=document.getElementById('rs').value;
+      const id='a'+Date.now();
+      const artisan={id,nom,email:tel,tel,ville,adresse,spec,pwd,role:'artisan',avatar:spec.split(' ')[0]||'🏺',photo:'',bio:'',articles:[],cataloguePdf:'',dateInscription:Date.now()};
+      state.artisans.push(artisan);state.users.push(artisan);
+      state.currentUser=artisan;saveState();updateNav();
+      showToast(`✅ Bienvenue ${nom} ! Votre compte artisan est créé.`);navigate('dashboard');
+    }
+  };
+}
+
+function showVerificationModal(email,code){
+  showModal(`
+  <div style="text-align:center;">
+    <div style="font-size:2.5rem;margin-bottom:10px;">✉️</div>
+    <h3 style="color:var(--forest);margin-bottom:10px;">Vérification de l'email</h3>
+    <p style="color:#666;margin-bottom:14px;">Un code de vérification a été envoyé à <strong>${esc(email)}</strong>.</p>
+    <div style="background:var(--cream);border-radius:10px;padding:14px;margin:14px 0;border:2px dashed var(--gold);">
+      <p style="font-size:.78rem;color:#888;margin-bottom:4px;">🔬 Mode démonstration — Code généré :</p>
+      <p style="font-size:2rem;font-weight:700;color:var(--forest);letter-spacing:6px;">${code}</p>
+    </div>
+    <div class="form-group">
+      <label>Entrez le code à 6 chiffres :</label>
+      <input type="text" id="vcode" maxlength="6" placeholder="000000" style="text-align:center;font-size:1.3rem;letter-spacing:5px;">
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="verifyCode()">Valider ✓</button>
+    </div>
+  </div>`);
+}
+
+window.verifyCode=function(){
+  const inp=document.getElementById('vcode');
+  if(!inp||!pendingVerif){closeModal();return;}
+  if(inp.value.trim()===pendingVerif.code){
+    const u=pendingVerif.userData;
+    if(!u.dateInscription)u.dateInscription=Date.now();
+    state.users.push(u);state.currentUser=u;
+    pendingVerif=null;saveState();updateNav();closeModal();
+    showToast(`✅ Compte créé ! Bienvenue, ${u.nom} !`);navigate('dashboard');
+  }else{showToast('❌ Code incorrect. Réessayez.','error');inp.value='';}
+};
+
+function renderConnexion(tc){
+  let r='etudiant';
+  const rr=()=>{
+    tc.innerHTML=`
+    <h3 style="margin-bottom:14px;color:var(--forest);">🔓 Se connecter</h3>
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <button class="btn ${r==='etudiant'?'btn-gold':'btn-outline'} btn-sm" id="ce">🧑‍🎓 Étudiant</button>
+      <button class="btn ${r==='artisan'?'btn-gold':'btn-outline'} btn-sm" id="ca">🏺 Artisan</button>
+    </div>
+    ${r==='etudiant'?
+      `<div class="form-group"><label>Email</label><input type="email" id="lid" placeholder="votre@email.com"></div>`:
+      `<div class="form-group"><label>Téléphone</label><input id="lid" placeholder="06XXXXXXXX"></div>`
+    }
+    <div class="form-group"><label>Mot de passe</label><input type="password" id="lpwd" placeholder="••••••"></div>
+    <button class="btn btn-primary" style="width:100%;" id="lb">Se connecter →</button>`;
+    document.getElementById('ce').onclick=()=>{r='etudiant';rr();};
+    document.getElementById('ca').onclick=()=>{r='artisan';rr();};
+    document.getElementById('lb').onclick=()=>{
+      const id=san(document.getElementById('lid').value.toLowerCase());
+      const pwd=document.getElementById('lpwd').value;
+      let found;
+      if(r==='etudiant')found=state.users.find(u=>u.email===id&&u.pwd===pwd&&u.role==='etudiant');
+      else found=state.artisans.find(a=>(a.email===id||a.tel===id)&&a.pwd===pwd);
+      if(!found){showToast('❌ Identifiants incorrects.','error');return;}
+      if(isBlocked(found.email)){showToast('🚫 Compte bloqué. Contactez l\'administrateur.','error');return;}
+      state.currentUser=found;saveState();updateNav();
+      showToast(`✅ Bonjour, ${found.nom} !`);navigate('dashboard');
+    };
+  };rr();
+}
+
+// ══════════════════════════════════════════════
+// MON PROFIL
+// ══════════════════════════════════════════════
+function renderMonProfil(container){
+  const u=state.currentUser;
+  if(!u){navigate('profil');return;}
+  if(u.role==='artisan'){renderMonProfilArtisan(container);return;}
+  // Student profile
+  let editing=false;
+  const re=()=>{
+    const myCreations=state.creations.filter(c=>c.studentEmail===u.email);
+    container.innerHTML=`
+    <div style="max-width:900px;margin:30px auto;padding:0 20px;">
+      <div class="card-dark" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+        ${u.photo?`<img src="${u.photo}" class="profile-photo-circle" alt="photo">`:`<div class="profile-photo-placeholder">${u.avatar||'🧑‍🎓'}</div>`}
+        <div style="flex:1;">
+          <h2 style="color:var(--gold);">${esc(u.nom)}</h2>
+          <p style="color:var(--muted);">🧑‍🎓 Étudiant — ${esc(u.ville)}</p>
+          <p style="color:var(--muted);font-size:.85rem;">📧 ${esc(u.email)}</p>
+        </div>
+        <button class="btn btn-gold btn-sm" onclick="editStudentProfile()">✏️ Modifier</button>
+      </div>
+      <div style="margin-top:24px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h3 style="color:var(--forest);">🎨 Mes Créations Partagées (${myCreations.length})</h3>
+          <button class="btn btn-primary btn-sm" onclick="showAddCreationModal()">+ Partager une création</button>
+        </div>
+        ${myCreations.length?`<div class="grid-3">${myCreations.map(c=>`
+          <div class="creation-card">
+            ${c.imageData?`<img src="${c.imageData}" alt="${esc(c.titre)}">`:`<div style="height:150px;background:var(--forest-m);display:flex;align-items:center;justify-content:center;font-size:3rem;">🎨</div>`}
+            <div class="creation-body">
+              <h4 style="color:var(--forest);">${esc(c.titre)}</h4>
+              <p style="font-size:.83rem;color:#666;">${esc(c.description)}</p>
+              ${c.artisanEmail?`<p style="font-size:.8rem;color:var(--sage);">👨‍🏫 ${esc((state.artisans.find(a=>a.email===c.artisanEmail)||{}).nom||'')}</p>`:''}
+              <button class="btn btn-danger btn-sm" style="margin-top:8px;" onclick="deleteCreation('${c.id}')">🗑</button>
+            </div>
+          </div>`).join('')}</div>`:
+          `<div class="card" style="text-align:center;color:#888;padding:40px;"><p>Aucune création partagée pour l'instant.<br>Partagez vos œuvres réalisées avec les artisans TAWURI !</p></div>`
+        }
+      </div>
+    </div>`;
+  };re();
+
+  window.editStudentProfile=function(){
+    showModal(`
+    <h3 style="color:var(--forest);margin-bottom:16px;">✏️ Modifier mon profil</h3>
+    <div class="form-group"><label>Nom complet</label><input id="en" value="${esc(u.nom)}"></div>
+    <div class="form-group"><label>Ville</label><select id="ev">${VILLES.map(v=>`<option ${v===u.ville?'selected':''}>${v}</option>`).join('')}</select></div>
+    <div class="form-group"><label>Photo de profil</label><input type="file" id="ep" accept="image/*"></div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="saveStudentProfile()">Sauvegarder</button>
+    </div>`);
+  };
+
+  window.saveStudentProfile=function(){
+    const nom=san(document.getElementById('en').value);
+    const ville=document.getElementById('ev').value;
+    const fileInp=document.getElementById('ep');
+    const doSave=(photo)=>{
+      const idx=state.users.findIndex(x=>x.email===u.email);
+      const art=state.artisans.findIndex(x=>x.email===u.email);
+      if(idx>=0){state.users[idx].nom=nom;state.users[idx].ville=ville;if(photo)state.users[idx].photo=photo;}
+      if(art>=0){state.artisans[art].nom=nom;state.artisans[art].ville=ville;if(photo)state.artisans[art].photo=photo;}
+      state.currentUser.nom=nom;state.currentUser.ville=ville;if(photo)state.currentUser.photo=photo;
+      saveState();closeModal();showToast('✅ Profil mis à jour.');re();
+    };
+    if(fileInp.files[0])resizeImage(fileInp.files[0],300,photo=>doSave(photo));
+    else doSave(null);
+  };
+
+  window.showAddCreationModal=function(){
+    showModal(`
+    <h3 style="color:var(--forest);margin-bottom:16px;">🎨 Partager une création</h3>
+    <div class="form-group"><label>Titre *</label><input id="ct" placeholder="Ex: Poterie tifinagh réalisée avec Fatima"></div>
+    <div class="form-group"><label>Description</label><textarea id="cd" rows="3" placeholder="Décrivez votre création..."></textarea></div>
+    <div class="form-group"><label>Photo de la création</label><input type="file" id="ci" accept="image/*"></div>
+    <div class="form-group"><label>Artisan avec qui je l'ai réalisée</label>
+      <select id="ca2"><option value="">— Aucun sélectionné —</option>${state.artisans.map(a=>`<option value="${esc(a.email)}">${esc(a.nom)} (${esc(a.spec)})</option>`).join('')}</select>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-gold" style="flex:1;" onclick="saveCreation()">Publier →</button>
+    </div>`);
+  };
+
+  window.saveCreation=function(){
+    const titre=san(document.getElementById('ct').value);
+    if(!titre){showToast('⚠️ Titre obligatoire.','error');return;}
+    const description=document.getElementById('cd').value.trim();
+    const artisanEmail=document.getElementById('ca2').value;
+    const fileInp=document.getElementById('ci');
+    const doSave=(img)=>{
+      const c={id:'cr'+Date.now(),studentEmail:u.email,titre,description,imageData:img||'',artisanEmail,date:Date.now()};
+      state.creations.push(c);saveState();closeModal();showToast('✅ Création partagée !');re();
+    };
+    if(fileInp.files[0])resizeImage(fileInp.files[0],500,img=>doSave(img));
+    else doSave(null);
+  };
+
+  window.deleteCreation=function(id){
+    if(!confirm('Supprimer cette création ?'))return;
+    state.creations=state.creations.filter(c=>c.id!==id);saveState();showToast('🗑 Création supprimée.');re();
+  };
+}
+
+function renderMonProfilArtisan(container){
+  const u=state.currentUser;
+  const re=()=>{
+    container.innerHTML=`
+    <div style="max-width:900px;margin:30px auto;padding:0 20px;">
+      <div class="card-dark" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+        ${u.photo?`<img src="${u.photo}" class="profile-photo-circle" alt="photo">`:`<div class="profile-photo-placeholder">${u.avatar||'🏺'}</div>`}
+        <div style="flex:1;">
+          <h2 style="color:var(--gold);">${esc(u.nom)}</h2>
+          <p style="color:var(--muted);">${esc(u.spec)} — ${esc(u.ville)}</p>
+          <p style="color:var(--muted);font-size:.85rem;">📞 ${esc(u.tel)} | 📍 ${esc(u.adresse)}</p>
+          ${u.bio?`<p style="color:var(--mint);font-size:.88rem;margin-top:4px;">${esc(u.bio)}</p>`:''}
+          ${(()=>{const r=getAvgRating(u.email);return r?`<p style="color:var(--gold);">${renderStars(r)} ${r}/5</p>`:''})()}
+        </div>
+        <button class="btn btn-gold btn-sm" onclick="editArtisanProfile()">✏️ Modifier</button>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h3 style="color:var(--forest);">📄 Catalogue PDF</h3>
+          <label class="btn btn-primary btn-sm" style="cursor:pointer;">📤 Uploader<input type="file" id="pdf-inp" accept=".pdf" style="display:none;" onchange="uploadCataloguePdf(this)"></label>
+        </div>
+        ${u.cataloguePdf?`<div style="margin-top:10px;"><a href="${u.cataloguePdf}" download="catalogue_${esc(u.nom)}.pdf" class="btn btn-gold btn-sm">⬇ Télécharger mon catalogue PDF</a> <button class="btn btn-danger btn-sm" onclick="deleteCataloguePdf()">🗑 Supprimer</button></div>`:
+        `<p style="color:#888;font-size:.88rem;margin-top:8px;">Aucun PDF uploadé. Ajoutez votre catalogue de produits.</p>`}
+      </div>
+    </div>`;
+  };re();
+
+  window.editArtisanProfile=function(){
+    const art=state.artisans.find(a=>a.email===u.email)||u;
+    showModal(`
+    <h3 style="color:var(--forest);margin-bottom:16px;">✏️ Modifier mon profil</h3>
+    <div class="form-group"><label>Nom complet</label><input id="an" value="${esc(art.nom)}"></div>
+    <div class="form-group"><label>Téléphone</label><input id="at" value="${esc(art.tel)}"></div>
+    <div class="form-group"><label>Ville</label><select id="av">${VILLES.map(v=>`<option ${v===art.ville?'selected':''}>${v}</option>`).join('')}</select></div>
+    <div class="form-group"><label>Adresse de l'atelier</label><input id="aad" value="${esc(art.adresse)}"></div>
+    <div class="form-group"><label>Bio / Description</label><textarea id="ab" rows="3">${esc(art.bio)}</textarea></div>
+    <div class="form-group"><label>Photo de profil</label><input type="file" id="aphoto" accept="image/*"></div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="saveArtisanProfile()">Sauvegarder</button>
+    </div>`);
+  };
+
+  window.saveArtisanProfile=function(){
+    const nom=san(document.getElementById('an').value);
+    const tel=san(document.getElementById('at').value);
+    const ville=document.getElementById('av').value;
+    const adresse=san(document.getElementById('aad').value);
+    const bio=document.getElementById('ab').value.trim();
+    const fileInp=document.getElementById('aphoto');
+    const doSave=(photo)=>{
+      const idx=state.artisans.findIndex(a=>a.email===u.email);
+      const uidx=state.users.findIndex(a=>a.email===u.email);
+      const update={nom,tel,ville,adresse,bio};if(photo)update.photo=photo;
+      if(idx>=0)Object.assign(state.artisans[idx],update);
+      if(uidx>=0)Object.assign(state.users[uidx],update);
+      Object.assign(state.currentUser,update);
+      saveState();closeModal();showToast('✅ Profil mis à jour.');re();
+    };
+    if(fileInp.files[0])resizeImage(fileInp.files[0],300,p=>doSave(p));
+    else doSave(null);
+  };
+
+  window.uploadCataloguePdf=function(inp){
+    const file=inp.files[0];if(!file)return;
+    const r=new FileReader();
+    r.onload=e=>{
+      const data=e.target.result;
+      const idx=state.artisans.findIndex(a=>a.email===u.email);
+      if(idx>=0)state.artisans[idx].cataloguePdf=data;
+      state.currentUser.cataloguePdf=data;
+      saveState();showToast('✅ Catalogue PDF uploadé.');re();
+    };r.readAsDataURL(file);
+  };
+
+  window.deleteCataloguePdf=function(){
+    const idx=state.artisans.findIndex(a=>a.email===u.email);
+    if(idx>=0)state.artisans[idx].cataloguePdf='';
+    state.currentUser.cataloguePdf='';saveState();showToast('🗑 PDF supprimé.');re();
+  };
+}
+
+// ══════════════════════════════════════════════
+// EXPLORER
+// ══════════════════════════════════════════════
+function renderExplore(container){
+  let fSpec='tous',fVille='toutes',fSearch='';
+  const render=()=>{
+    const grid=container.querySelector('#ag');
+    if(!grid)return;
+    let list=state.artisans.filter(a=>!isBlocked(a.email));
+    if(fSpec!=='tous')list=list.filter(a=>a.spec===fSpec);
+    if(fVille!=='toutes')list=list.filter(a=>a.ville===fVille);
+    if(fSearch)list=list.filter(a=>a.nom.toLowerCase().includes(fSearch)||a.spec.toLowerCase().includes(fSearch)||a.ville.toLowerCase().includes(fSearch));
+    grid.innerHTML=list.length?list.map(a=>{
+      const avg=getAvgRating(a.email);
+      const ev=state.evaluations.filter(e=>e.artisanEmail===a.email).length;
+      return`<div class="artisan-card">
+        ${a.photo?`<img src="${a.photo}" style="width:100%;height:180px;object-fit:cover;" alt="${esc(a.nom)}">`:`<div style="width:100%;height:180px;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:4rem;">${a.avatar||'🏺'}</div>`}
+        <div class="artisan-body">
+          <h3 style="color:var(--forest);">${esc(a.nom)}</h3>
+          <p style="font-size:.88rem;color:var(--sage);">${esc(a.spec)}</p>
+          <p style="font-size:.83rem;color:#666;">📍 ${esc(a.ville)}</p>
+          ${avg?`<p class="star-display" style="font-size:.88rem;">${renderStars(avg)} <span style="color:#666;">${avg} (${ev} avis)</span></p>`:`<p style="font-size:.8rem;color:#999;">Pas encore évalué</p>`}
+          ${isRestricted(a.email)?`<span class="tag">⚠️ Restreint</span>`:''}
+          <div style="margin-top:auto;padding-top:10px;">
+            <button class="btn btn-gold btn-sm" style="width:100%;" onclick="navigate('artisan-profil',{email:'${a.email}'})">👁 Voir le profil</button>
+          </div>
+        </div>
+      </div>`;
+    }).join(''):`<div style="grid-column:1/-1;text-align:center;padding:50px;color:#888;"><p>Aucun artisan trouvé avec ces critères.</p></div>`;
+  };
+  container.innerHTML=`
+  <div style="background:var(--forest);padding:28px 20px;color:var(--cream);">
+    <h1 style="font-family:'Playfair Display',serif;margin-bottom:16px;">🔭 Explorer les Artisans</h1>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <input id="fsearch" placeholder="🔍 Rechercher nom, spécialité, ville..." style="flex:2;min-width:200px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:white;">
+      <select id="fspec" style="flex:1;min-width:160px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:white;">
+        <option value="tous">Toutes spécialités</option>${SPECIALITES.map(s=>`<option value="${s}">${s}</option>`).join('')}
+      </select>
+      <select id="fville" style="flex:1;min-width:140px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:white;">
+        <option value="toutes">Toutes villes</option>${VILLES.map(v=>`<option>${v}</option>`).join('')}
+      </select>
+    </div>
+  </div>
+  <div id="ag" class="grid-3" style="max-width:1100px;margin:0 auto;padding:22px;"></div>`;
+  container.querySelector('#fsearch').addEventListener('input',function(){fSearch=this.value.toLowerCase().trim();render();});
+  container.querySelector('#fspec').addEventListener('change',function(){fSpec=this.value;render();});
+  container.querySelector('#fville').addEventListener('change',function(){fVille=this.value;render();});
+  render();
+}
+
+// ══════════════════════════════════════════════
+// ARTISAN PROFILE PAGE
+// ══════════════════════════════════════════════
+function renderArtisanProfilePage(container){
+  const email=navParams.email;
+  const a=state.artisans.find(x=>x.email===email);
+  if(!a){container.innerHTML='<p style="text-align:center;padding:40px;">Artisan introuvable.</p>';return;}
+  const avg=getAvgRating(a.email);
+  const evs=state.evaluations.filter(e=>e.artisanEmail===a.email);
+  const u=state.currentUser;
+
+  const canEval=u&&u.role==='etudiant'&&state.rdvs.some(r=>r.etudiantEmail===u.email&&r.artisanEmail===a.email&&r.status==='confirmé');
+  const alreadyEval=u&&state.evaluations.some(e=>e.etudiantEmail===u.email&&e.artisanEmail===a.email);
+  const articles=(a.articles||[]);
+
+  container.innerHTML=`
+  <div style="background:var(--forest);padding:40px 20px;color:var(--cream);">
+    <button class="btn btn-outline" style="color:var(--muted);border-color:var(--muted);margin-bottom:16px;" onclick="navigate('explore')">← Retour à l'explorateur</button>
+    <div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap;max-width:900px;margin:0 auto;">
+      ${a.photo?`<img src="${a.photo}" class="profile-photo-circle" style="width:100px;height:100px;" alt="${esc(a.nom)}">`:`<div class="profile-photo-placeholder" style="width:100px;height:100px;font-size:2.5rem;">${a.avatar||'🏺'}</div>`}
+      <div style="flex:1;">
+        <h1 style="font-family:'Playfair Display',serif;color:var(--gold);">${esc(a.nom)}</h1>
+        <p style="color:var(--mint);">${esc(a.spec)}</p>
+        <p style="color:var(--muted);">📍 ${esc(a.ville)} — ${esc(a.adresse)}</p>
+        <p style="color:var(--muted);">📞 ${esc(a.tel)}</p>
+        ${avg?`<p style="color:var(--gold);font-size:1.1rem;margin-top:4px;">${renderStars(avg)} ${avg}/5 <span style="color:var(--muted);font-size:.85rem;">(${evs.length} avis)</span></p>`:`<p style="color:var(--muted);">Pas encore évalué</p>`}
+      </div>
+    </div>
+    ${u&&u.role==='etudiant'?`<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;max-width:900px;margin:22px auto 0;">
+      ${!isRestricted(u.email)?`<button class="btn btn-gold" onclick="openRdvModal('${a.email}')">📅 Réserver un RDV</button>`:''}
+      ${canEval&&!alreadyEval?`<button class="btn btn-primary" onclick="openEvalModal('${a.email}')">⭐ Évaluer</button>`:''}
+      ${alreadyEval?`<button class="btn btn-outline" style="cursor:default;" disabled>✅ Évalué</button>`:''}
+      ${!isRestricted(u.email)?`<button class="btn btn-info" onclick="goToMsg('${a.email}')">💬 Envoyer un message</button>`:''}
+    </div>`:''}
+  </div>
+  <div style="max-width:900px;margin:0 auto;padding:20px;">
+    ${a.bio?`<div class="card"><h3>👤 À propos</h3><p style="margin-top:8px;">${esc(a.bio)}</p></div>`:''}
+    ${a.cataloguePdf?`<div class="card"><h3>📄 Catalogue de l'artisan</h3><a href="${a.cataloguePdf}" download="catalogue_${esc(a.nom)}.pdf" class="btn btn-gold btn-sm" style="margin-top:10px;">⬇ Télécharger le catalogue PDF</a></div>`:''}
+    ${articles.length?`<div class="card"><h3>🛍 Articles & Créations</h3><div class="grid-3" style="margin-top:14px;">${articles.map(art=>`<div class="creation-card">${art.imageData?`<img src="${art.imageData}" alt="${esc(art.titre)}">`:`<div style="height:150px;background:var(--forest-m);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">${a.avatar||'🏺'}</div>`}<div class="creation-body"><h4>${esc(art.titre)}</h4><p style="font-size:.82rem;color:#666;">${esc(art.description)}</p>${art.categorie?`<span class="tag">${esc(art.categorie)}</span>`:''}</div></div>`).join('')}</div></div>`:''}
+    <div class="card">
+      <h3>⭐ Évaluations (${evs.length})</h3>
+      ${evs.length?evs.map(e=>`<div style="border-bottom:1px solid #eee;padding:12px 0;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="star-display">${renderStars(e.note)}</span>
+          <span style="color:var(--sage);font-size:.83rem;">${fmtDate(e.date)}</span>
+        </div>
+        ${e.commentaire?`<p style="font-size:.88rem;color:#444;margin-top:4px;">"${esc(e.commentaire)}"</p>`:''}
+      </div>`).join(''):`<p style="color:#888;margin-top:8px;">Aucune évaluation pour le moment.</p>`}
+    </div>
+  </div>`;
+}
+
+window.goToMsg=function(artisanEmail){navigate('msg',{artisanEmail});};
+
+window.openRdvModal=function(artisanEmail){
+  const a=state.artisans.find(x=>x.email===artisanEmail);if(!a)return;
+  const today=new Date().toISOString().split('T')[0];
+  showModal(`
+  <h3 style="color:var(--forest);margin-bottom:14px;">📅 Réserver un RDV</h3>
+  <p style="color:#666;margin-bottom:16px;">Artisan : <strong>${esc(a.nom)}</strong> — ${esc(a.spec)}</p>
+  <div class="form-group"><label>Date *</label><input type="date" id="rd" min="${today}"></div>
+  <div class="form-group"><label>Heure *</label><input type="time" id="rh" value="09:00"></div>
+  <div class="form-group"><label>Note / Message pour l'artisan</label><textarea id="rn" rows="3" placeholder="Ce que vous souhaitez apprendre, vos objectifs..."></textarea></div>
+  <div style="display:flex;gap:8px;margin-top:12px;">
+    <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+    <button class="btn btn-gold" style="flex:1;" onclick="confirmRdvRequest('${artisanEmail}')">Envoyer la demande →</button>
+  </div>`);
+};
+
+window.confirmRdvRequest=function(artisanEmail){
+  const date=document.getElementById('rd').value;
+  const heure=document.getElementById('rh').value;
+  const note=document.getElementById('rn').value.trim();
+  if(!date||!heure){showToast('⚠️ Date et heure obligatoires.','error');return;}
+  const u=state.currentUser;
+  const a=state.artisans.find(x=>x.email===artisanEmail);
+  state.rdvs.push({id:'rdv'+Date.now(),etudiantEmail:u.email,etudiantNom:u.nom,artisanEmail,artisanNom:a.nom,date,heure,note,status:'en_attente',createdAt:Date.now()});
+  saveState();closeModal();showToast('✅ Demande de RDV envoyée ! En attente de confirmation.');
+};
+
+window.openEvalModal=function(artisanEmail){
+  let selectedNote=0;
+  const a=state.artisans.find(x=>x.email===artisanEmail);
+  showModal(`
+  <h3 style="color:var(--forest);margin-bottom:12px;">⭐ Évaluer ${esc(a.nom)}</h3>
+  <p style="color:#666;margin-bottom:14px;">Partagez votre expérience avec cet artisan.</p>
+  <div class="stars-input" id="stars-row">
+    ${[1,2,3,4,5].map(n=>`<button class="star-btn" id="star${n}" onclick="selectStar(${n})" title="${n} étoile${n>1?'s':''}">☆</button>`).join('')}
+  </div>
+  <div class="form-group"><label>Commentaire</label><textarea id="ecomment" rows="3" placeholder="Décrivez votre expérience..."></textarea></div>
+  <div style="display:flex;gap:8px;margin-top:12px;">
+    <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+    <button class="btn btn-gold" style="flex:1;" onclick="submitEval('${artisanEmail}')">Publier l'avis →</button>
+  </div>`);
+  window.selectStar=function(n){
+    selectedNote=n;
+    [1,2,3,4,5].forEach(i=>{const btn=document.getElementById('star'+i);if(btn)btn.textContent=i<=n?'★':'☆';if(btn)btn.classList.toggle('active',i<=n);});
+  };
+  window.submitEval=function(artisanEmail){
+    if(!selectedNote){showToast('⚠️ Sélectionnez une note.','error');return;}
+    const commentaire=document.getElementById('ecomment').value.trim();
+    const u=state.currentUser;
+    state.evaluations.push({id:'ev'+Date.now(),etudiantEmail:u.email,artisanEmail,note:selectedNote,commentaire,date:Date.now()});
+    saveState();closeModal();showToast('✅ Évaluation publiée. Merci !');navigate('artisan-profil',{email:artisanEmail});
+  };
+};
+
+// ══════════════════════════════════════════════
+// MESSAGERIE
+// ══════════════════════════════════════════════
+function renderMessagerie(container){
+  const u=state.currentUser;
+  if(!u){container.innerHTML='<p style="text-align:center;padding:40px;">Connectez-vous pour accéder à la messagerie.</p>';return;}
+
+  let activeThread=null;
+  if(navParams.artisanEmail)activeThread=navParams.artisanEmail;
+
+  const getMyThreads=()=>{
+    const threads=[];
+    if(u.role==='etudiant'){
+      state.artisans.forEach(a=>{
+        const tid=getThreadId(u.email,a.email);
+        if(state.messages[tid]&&state.messages[tid].length)threads.push({other:a,tid,last:state.messages[tid].slice(-1)[0]});
+      });
+      if(activeThread&&!threads.find(t=>t.other.email===activeThread)){
+        const a=state.artisans.find(x=>x.email===activeThread);
+        if(a){const tid=getThreadId(u.email,a.email);threads.unshift({other:a,tid,last:null});}
+      }
+    }else if(u.role==='artisan'){
+      state.users.filter(x=>x.role==='etudiant').forEach(s=>{
+        const tid=getThreadId(u.email,s.email);
+        if(state.messages[tid]&&state.messages[tid].length)threads.push({other:s,tid,last:state.messages[tid].slice(-1)[0]});
+      });
+    }
+    return threads.sort((a,b)=>(b.last?.ts||0)-(a.last?.ts||0));
+  };
+
+  const re=()=>{
+    const threads=getMyThreads();
+    if(!activeThread&&threads.length)activeThread=threads[0].other.email;
+
+    container.innerHTML=`
+    <div style="display:flex;min-height:80vh;background:var(--forest);">
+      <div style="width:280px;border-right:1px solid rgba(255,255,255,0.1);overflow-y:auto;">
+        <div style="padding:16px;border-bottom:1px solid rgba(255,255,255,0.1);">
+          <p style="color:var(--gold);font-size:.78rem;letter-spacing:2px;text-transform:uppercase;">💬 Messagerie</p>
+          ${u.role==='etudiant'?`<button class="btn btn-gold btn-sm" style="margin-top:8px;width:100%;" onclick="showNewMsgModal()">+ Nouveau message</button>`:''}
+        </div>
+        <div id="thread-list">
+          ${threads.length?threads.map(t=>`
+            <div class="thread-item ${activeThread===t.other.email?'active':''}" onclick="setActiveThread('${t.other.email}')">
+              <div style="width:36px;height:36px;background:var(--forest-m);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">${t.other.avatar||'👤'}</div>
+              <div style="flex:1;min-width:0;">
+                <p style="color:var(--cream);font-size:.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(t.other.nom)}</p>
+                <p style="color:var(--muted);font-size:.76rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t.last?esc(t.last.text.substring(0,30))+'...':'...'}</p>
+              </div>
+            </div>`).join(''):`<p style="color:var(--muted);padding:20px;font-size:.88rem;text-align:center;">Aucune conversation</p>`}
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;" id="chat-panel">
+        ${renderChatPanel(activeThread)}
+      </div>
+    </div>`;
+
+    window.setActiveThread=function(email){activeThread=email;re();};
+  };re();
+
+  window.showNewMsgModal=function(){
+    showModal(`
+    <h3 style="color:var(--forest);margin-bottom:14px;">💬 Nouvelle conversation</h3>
+    <div class="form-group"><label>Choisir un artisan</label>
+      <select id="nm-art">${state.artisans.map(a=>`<option value="${esc(a.email)}">${esc(a.nom)} — ${esc(a.spec)}</option>`).join('')}</select>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="startNewMsg()">Ouvrir la conversation →</button>
+    </div>`);
+  };
+
+  window.startNewMsg=function(){
+    const email=document.getElementById('nm-art').value;
+    activeThread=email;closeModal();re();
+  };
+}
+
+function renderChatPanel(otherEmail){
+  const u=state.currentUser;
+  if(!otherEmail)return`<div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--muted);">Sélectionnez une conversation</div>`;
+  const other=(u.role==='etudiant'?state.artisans:state.users.filter(x=>x.role==='etudiant')).find(x=>x.email===otherEmail);
+  if(!other)return`<div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--muted);">Introuvable.</div>`;
+  const tid=getThreadId(u.email,other.email);
+  const msgs=state.messages[tid]||[];
+  return`
+  <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:12px;">
+    <div style="width:36px;height:36px;background:var(--forest-m);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">${other.avatar||'👤'}</div>
+    <div><p style="color:var(--cream);font-weight:600;">${esc(other.nom)}</p><p style="color:var(--muted);font-size:.78rem;">${esc(other.spec||other.ville||'')}</p></div>
+  </div>
+  <div class="msg-area" id="msg-area" style="flex:1;border-radius:0;">
+    ${msgs.length?msgs.map(m=>`
+      <div style="display:flex;flex-direction:column;align-items:${m.from===u.email?'flex-end':'flex-start'};">
+        <div class="msg-bubble ${m.from===u.email?'sent':'received'}">${esc(m.text)}</div>
+        <span class="msg-meta" style="color:var(--muted);">${fmtDate(m.ts)}</span>
+      </div>`).join(''):`<div style="text-align:center;color:var(--muted);margin:auto;">Démarrez la conversation !</div>`}
+  </div>
+  <div style="padding:12px 16px;border-top:1px solid rgba(255,255,255,0.1);display:flex;gap:8px;">
+    <input id="msg-inp" placeholder="Écrire un message..." style="flex:1;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;border-radius:24px;" onkeypress="if(event.key==='Enter')sendMsg('${other.email}')">
+    <button class="btn btn-gold btn-sm" onclick="sendMsg('${other.email}')">Envoyer →</button>
+  </div>`;
+}
+
+window.sendMsg=function(toEmail){
+  const u=state.currentUser;
+  const inp=document.getElementById('msg-inp');
+  if(!inp||!inp.value.trim())return;
+  const text=inp.value.trim();
+  const tid=getThreadId(u.email,toEmail);
+  if(!state.messages[tid])state.messages[tid]=[];
+  state.messages[tid].push({from:u.email,to:toEmail,text,ts:Date.now()});
+  saveState();
+  const panel=document.getElementById('chat-panel');
+  if(panel)panel.innerHTML=renderChatPanel(toEmail);
+  const area=document.getElementById('msg-area');
+  if(area)area.scrollTop=area.scrollHeight;
+};
+
+// ══════════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════════
+function renderDashboard(container){
+  const u=state.currentUser;
+  if(!u){container.innerHTML='<p style="text-align:center;padding:40px;">Connectez-vous.</p>';return;}
+  if(u.role==='artisan'){renderArtisanDashboard(container);return;}
+  if(u.role==='admin'){navigate('admin');return;}
+  // Student dashboard
+  const myRdvs=state.rdvs.filter(r=>r.etudiantEmail===u.email);
+  const myEvals=state.evaluations.filter(e=>e.etudiantEmail===u.email);
+  const myCreations=state.creations.filter(c=>c.studentEmail===u.email);
+  const myMsgs=Object.entries(state.messages).filter(([tid,msgs])=>tid.includes(u.email)&&msgs.some(m=>m.from===u.email));
+  const today=new Date();
+  container.innerHTML=`
+  <div style="background:var(--forest);min-height:100vh;padding:0 0 40px;">
+    <div style="max-width:1000px;margin:0 auto;padding:30px 20px 0;">
+      <p style="color:var(--gold);font-size:.78rem;letter-spacing:3px;text-transform:uppercase;">ⵜⴰⵡⵓⵔⵉ — VOTRE ESPACE</p>
+      <h1 style="font-family:'Playfair Display',serif;color:var(--cream);font-size:2rem;margin:4px 0;">Tableau de bord</h1>
+      <div style="margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        ${u.photo?`<img src="${u.photo}" class="profile-photo-circle" style="width:52px;height:52px;" alt="photo">`:`<div style="width:52px;height:52px;background:var(--forest-m);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">${u.avatar||'🧑‍🎓'}</div>`}
+        <div>
+          <h2 style="color:var(--cream);">Bonjour, ${esc(u.nom)} ${u.avatar||'🧑‍🎓'}</h2>
+          <p style="color:var(--muted);font-size:.88rem;">${today.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
+        </div>
+      </div>
+      <div class="grid-4" style="margin-top:28px;">
+        <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-num">${myRdvs.length}</div><div class="stat-label">Rendez-vous</div></div>
+        <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-num">${myEvals.length}</div><div class="stat-label">Évaluations</div></div>
+        <div class="stat-card"><div class="stat-icon">🎨</div><div class="stat-num">${myCreations.length}</div><div class="stat-label">Créations</div></div>
+        <div class="stat-card"><div class="stat-icon">💬</div><div class="stat-num">${myMsgs.length}</div><div class="stat-label">Conversations</div></div>
+      </div>
+      <div style="margin-top:28px;">
+        <h3 style="color:var(--cream);margin-bottom:14px;">📅 Mes Rendez-vous</h3>
+        ${myRdvs.length?myRdvs.slice().reverse().map(r=>`
+          <div class="rdv-card ${r.status==='confirmé'?'confirmed':r.status==='reporté'?'reported':'pending'}">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;">
+              <div>
+                <p style="font-weight:700;color:var(--forest);">🏺 ${esc(r.artisanNom)}</p>
+                <p style="font-size:.85rem;color:#555;">📅 ${r.date} à ${r.heure}</p>
+                ${r.note?`<p style="font-size:.82rem;color:#777;">📝 ${esc(r.note)}</p>`:''}
+                ${r.newDate?`<p style="font-size:.82rem;color:var(--gold);">📆 Reporté au ${r.newDate} à ${r.newHeure}</p>`:''}
+              </div>
+              <span style="padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;background:${r.status==='confirmé'?'#d1fae5':r.status==='reporté'?'#fef3c7':'#e0f2fe'};color:${r.status==='confirmé'?'#065f46':r.status==='reporté'?'#92400e':'#0c4a6e'};">${r.status==='en_attente'?'⏳ En attente':r.status==='confirmé'?'✅ Confirmé':'🔄 Reporté'}</span>
+            </div>
+          </div>`).join(''):`<div style="background:rgba(255,255,255,0.05);border-radius:var(--radius);padding:30px;text-align:center;color:var(--muted);">Aucun rendez-vous. <button class="btn btn-gold btn-sm" style="margin-left:10px;" onclick="navigate('explore')">Explorer les artisans</button></div>`}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderArtisanDashboard(container){
+  const u=state.currentUser;
+  const myRdvs=state.rdvs.filter(r=>r.artisanEmail===u.email);
+  const myEvals=state.evaluations.filter(e=>e.artisanEmail===u.email);
+  const articles=(state.artisans.find(a=>a.email===u.email)||{}).articles||[];
+  const myMsgs=Object.entries(state.messages).filter(([tid])=>tid.includes(u.email));
+  const avg=getAvgRating(u.email);
+  const today=new Date();
+  const pending=myRdvs.filter(r=>r.status==='en_attente');
+  container.innerHTML=`
+  <div style="background:var(--forest);min-height:100vh;padding:0 0 40px;">
+    <div style="max-width:1000px;margin:0 auto;padding:30px 20px 0;">
+      <p style="color:var(--gold);font-size:.78rem;letter-spacing:3px;text-transform:uppercase;">ⵜⴰⵡⵓⵔⵉ — VOTRE ESPACE</p>
+      <h1 style="font-family:'Playfair Display',serif;color:var(--cream);font-size:2rem;margin:4px 0;">Tableau de bord</h1>
+      <div style="margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        ${u.photo?`<img src="${u.photo}" class="profile-photo-circle" style="width:52px;height:52px;" alt="photo">`:`<div style="width:52px;height:52px;background:var(--forest-m);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">${u.avatar||'🏺'}</div>`}
+        <div>
+          <h2 style="color:var(--cream);">Bonjour, ${esc(u.nom)} ${u.avatar||'🏺'}</h2>
+          <p style="color:var(--muted);font-size:.88rem;">${today.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
+        </div>
+      </div>
+      <div class="grid-4" style="margin-top:28px;">
+        <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-num">${myRdvs.length}</div><div class="stat-label">Rendez-vous</div></div>
+        <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-num">${avg?avg+'/5':'—'}</div><div class="stat-label">Évaluation moy.</div></div>
+        <div class="stat-card"><div class="stat-icon">🗂️</div><div class="stat-num">${articles.length}</div><div class="stat-label">Articles catalogue</div></div>
+        <div class="stat-card"><div class="stat-icon">💬</div><div class="stat-num">${myMsgs.length}</div><div class="stat-label">Conversations</div></div>
+      </div>
+      ${pending.length?`<div style="background:rgba(201,168,76,0.12);border:1px solid var(--gold);border-radius:var(--radius);padding:16px;margin-top:20px;">
+        <p style="color:var(--gold);font-weight:700;">⏳ ${pending.length} demande(s) de RDV en attente</p>
+        <button class="btn btn-gold btn-sm" style="margin-top:8px;" onclick="navigate('calendrier')">Gérer le calendrier →</button>
+      </div>`:''}
+      <div style="margin-top:28px;">
+        <h3 style="color:var(--cream);margin-bottom:14px;">📅 Derniers Rendez-vous</h3>
+        ${myRdvs.length?myRdvs.slice().reverse().slice(0,5).map(r=>`
+          <div class="rdv-card ${r.status==='confirmé'?'confirmed':r.status==='reporté'?'reported':'pending'}">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;">
+              <div>
+                <p style="font-weight:700;color:var(--forest);">🧑‍🎓 ${esc(r.etudiantNom)}</p>
+                <p style="font-size:.85rem;color:#555;">📅 ${r.date} à ${r.heure}</p>
+                ${r.note?`<p style="font-size:.82rem;color:#777;">📝 ${esc(r.note)}</p>`:''}
+              </div>
+              <span style="padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;background:${r.status==='confirmé'?'#d1fae5':r.status==='reporté'?'#fef3c7':'#e0f2fe'};color:${r.status==='confirmé'?'#065f46':r.status==='reporté'?'#92400e':'#0c4a6e'};">${r.status==='en_attente'?'⏳ En attente':r.status==='confirmé'?'✅ Confirmé':'🔄 Reporté'}</span>
+            </div>
+          </div>`).join(''):`<div style="background:rgba(255,255,255,0.05);border-radius:var(--radius);padding:30px;text-align:center;color:var(--muted);">Aucun rendez-vous pour l'instant.</div>`}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════
+// CALENDRIER (ARTISAN)
+// ══════════════════════════════════════════════
+function renderCalendrier(container){
+  const u=state.currentUser;
+  if(!u||u.role!=='artisan'){container.innerHTML='<p style="text-align:center;padding:40px;">Accès réservé aux artisans.</p>';return;}
+  const re=()=>{
+    const myRdvs=state.rdvs.filter(r=>r.artisanEmail===u.email).sort((a,b)=>new Date(a.date)-new Date(b.date));
+    const pending=myRdvs.filter(r=>r.status==='en_attente');
+    const confirmed=myRdvs.filter(r=>r.status==='confirmé');
+    const others=myRdvs.filter(r=>r.status==='reporté');
+    container.innerHTML=`
+    <div style="background:var(--forest);min-height:100vh;padding:30px 20px;">
+      <div style="max-width:900px;margin:0 auto;">
+        <h1 style="font-family:'Playfair Display',serif;color:var(--cream);margin-bottom:6px;">📅 Calendrier des RDV</h1>
+        <p style="color:var(--muted);margin-bottom:24px;">${myRdvs.length} rendez-vous au total</p>
+        ${pending.length?`<div style="margin-bottom:24px;">
+          <h3 style="color:var(--gold);margin-bottom:12px;">⏳ En attente de confirmation (${pending.length})</h3>
+          ${pending.map(r=>rdvCardArtisan(r)).join('')}
+        </div>`:''}
+        ${confirmed.length?`<div style="margin-bottom:24px;">
+          <h3 style="color:var(--mint);margin-bottom:12px;">✅ Confirmés (${confirmed.length})</h3>
+          ${confirmed.map(r=>rdvCardArtisan(r)).join('')}
+        </div>`:''}
+        ${others.length?`<div style="margin-bottom:24px;">
+          <h3 style="color:var(--gold-l);margin-bottom:12px;">🔄 Reportés (${others.length})</h3>
+          ${others.map(r=>rdvCardArtisan(r)).join('')}
+        </div>`:''}
+        ${!myRdvs.length?`<div style="background:rgba(255,255,255,0.05);border-radius:var(--radius);padding:50px;text-align:center;color:var(--muted);">Aucun rendez-vous pour l'instant.<br>Les demandes des étudiants apparaîtront ici.</div>`:''}
+      </div>
+    </div>`;
+  };re();
+
+  function rdvCardArtisan(r){
+    return`<div class="rdv-card ${r.status==='confirmé'?'confirmed':r.status==='reporté'?'reported':'pending'}" style="background:rgba(255,255,255,0.06);border-color:${r.status==='confirmé'?'var(--sage)':r.status==='reporté'?'var(--gold)':'var(--mint)'};">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+        <div>
+          <p style="font-weight:700;color:var(--cream);">🧑‍🎓 ${esc(r.etudiantNom)}</p>
+          <p style="font-size:.85rem;color:var(--muted);">📅 ${r.date} à ${r.heure}</p>
+          ${r.note?`<p style="font-size:.82rem;color:var(--muted);">📝 "${esc(r.note)}"</p>`:''}
+          ${r.newDate?`<p style="font-size:.82rem;color:var(--gold);">📆 Nouveau créneau : ${r.newDate} à ${r.newHeure}</p>`:''}
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          ${r.status==='en_attente'?`<button class="btn btn-primary btn-sm" onclick="confirmRdv('${r.id}')">✅ Confirmer</button><button class="btn btn-gold btn-sm" onclick="postponeRdvModal('${r.id}')">🔄 Reporter</button>`:''}
+          ${r.status==='confirmé'?`<span style="color:var(--mint);font-weight:600;">✅ Confirmé</span><button class="btn btn-gold btn-sm" onclick="postponeRdvModal('${r.id}')">🔄 Reporter</button>`:''}
+          ${r.status==='reporté'?`<span style="color:var(--gold);font-weight:600;">🔄 Reporté</span><button class="btn btn-primary btn-sm" onclick="confirmRdv('${r.id}')">✅ Confirmer quand même</button>`:''}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  window.confirmRdv=function(id){
+    const rdv=state.rdvs.find(r=>r.id===id);if(!rdv)return;
+    rdv.status='confirmé';saveState();showToast('✅ RDV confirmé !');re();
+  };
+  window.postponeRdvModal=function(id){
+    const rdv=state.rdvs.find(r=>r.id===id);if(!rdv)return;
+    const today=new Date().toISOString().split('T')[0];
+    showModal(`
+    <h3 style="color:var(--forest);margin-bottom:14px;">🔄 Reporter le RDV</h3>
+    <p style="color:#666;margin-bottom:14px;">Proposer un nouveau créneau à <strong>${esc(rdv.etudiantNom)}</strong></p>
+    <div class="form-group"><label>Nouvelle date *</label><input type="date" id="nd" min="${today}" value="${rdv.date}"></div>
+    <div class="form-group"><label>Nouvelle heure *</label><input type="time" id="nh" value="${rdv.heure}"></div>
+    <div class="form-group"><label>Message (optionnel)</label><textarea id="nm2" rows="2" placeholder="Raison du report..."></textarea></div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-gold" style="flex:1;" onclick="confirmPostpone('${id}')">Confirmer le report →</button>
+    </div>`);
+  };
+  window.confirmPostpone=function(id){
+    const date=document.getElementById('nd').value;
+    const heure=document.getElementById('nh').value;
+    if(!date||!heure){showToast('⚠️ Date et heure obligatoires.','error');return;}
+    const rdv=state.rdvs.find(r=>r.id===id);if(!rdv)return;
+    rdv.status='reporté';rdv.newDate=date;rdv.newHeure=heure;
+    saveState();closeModal();showToast('🔄 RDV reporté. L\'étudiant en sera informé.');re();
+  };
+}
+
+// ══════════════════════════════════════════════
+// CATALOGUE (ARTISAN)
+// ══════════════════════════════════════════════
+function renderCatalogue(container){
+  const u=state.currentUser;
+  if(!u||u.role!=='artisan'){container.innerHTML='<p style="text-align:center;padding:40px;">Accès réservé aux artisans.</p>';return;}
+  const getArt=()=>state.artisans.find(a=>a.email===u.email)||u;
+  const re=()=>{
+    const art=getArt();
+    const articles=art.articles||[];
+    container.innerHTML=`
+    <div style="background:var(--forest);min-height:100vh;padding:30px 20px;">
+      <div style="max-width:900px;margin:0 auto;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h1 style="font-family:'Playfair Display',serif;color:var(--cream);">🗂️ Gérer mon Catalogue</h1>
+            <p style="color:var(--muted);">${articles.length} article(s)</p>
+          </div>
+          <button class="btn btn-gold" onclick="showAddArticleModal()">+ Ajouter un article</button>
+        </div>
+        ${articles.length?`<div class="grid-3">${articles.map(a=>`
+          <div class="creation-card">
+            ${a.imageData?`<img src="${a.imageData}" alt="${esc(a.titre)}">`:`<div style="height:150px;background:var(--forest-m);display:flex;align-items:center;justify-content:center;font-size:3rem;">${u.avatar||'🏺'}</div>`}
+            <div class="creation-body">
+              <h4>${esc(a.titre)}</h4>
+              <p style="font-size:.82rem;color:#666;">${esc(a.description)}</p>
+              ${a.categorie?`<span class="tag">${esc(a.categorie)}</span>`:''}
+              <div style="display:flex;gap:6px;margin-top:10px;">
+                <button class="btn btn-outline btn-sm" onclick="editArticleModal('${a.id}')">✏️</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteArticle('${a.id}')">🗑</button>
+              </div>
+            </div>
+          </div>`).join('')}</div>`:
+          `<div style="background:rgba(255,255,255,0.05);border-radius:var(--radius);padding:50px;text-align:center;color:var(--muted);">Aucun article dans votre catalogue.<br><button class="btn btn-gold btn-sm" style="margin-top:14px;" onclick="showAddArticleModal()">+ Ajouter votre premier article</button></div>`}
+      </div>
+    </div>`;
+  };re();
+
+  window.showAddArticleModal=function(existing=null){
+    showModal(`
+    <h3 style="color:var(--forest);margin-bottom:14px;">${existing?'✏️ Modifier':'+ Ajouter'} un article</h3>
+    <div class="form-group"><label>Titre *</label><input id="at2" value="${existing?esc(existing.titre):''}" placeholder="Ex: Poterie bleue de Fès"></div>
+    <div class="form-group"><label>Description</label><textarea id="ad2" rows="3">${existing?esc(existing.description):''}</textarea></div>
+    <div class="form-group"><label>Catégorie</label><input id="ac2" value="${existing?esc(existing.categorie):''}" placeholder="Ex: Poterie, Tapis, Bijoux..."></div>
+    <div class="form-group"><label>Photo</label><input type="file" id="ai2" accept="image/*"></div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-gold" style="flex:1;" onclick="saveArticle('${existing?existing.id:''}')">Sauvegarder →</button>
+    </div>`);
+  };
+
+  window.editArticleModal=function(id){
+    const art=getArt();
+    const article=(art.articles||[]).find(a=>a.id===id);
+    if(!article)return;window.showAddArticleModal(article);
+  };
+
+  window.saveArticle=function(existingId){
+    const titre=san(document.getElementById('at2').value);
+    if(!titre){showToast('⚠️ Titre obligatoire.','error');return;}
+    const description=document.getElementById('ad2').value.trim();
+    const categorie=san(document.getElementById('ac2').value);
+    const fileInp=document.getElementById('ai2');
+    const doSave=(img)=>{
+      const idx=state.artisans.findIndex(a=>a.email===u.email);
+      if(idx<0)return;
+      if(!state.artisans[idx].articles)state.artisans[idx].articles=[];
+      if(existingId){
+        const ai=state.artisans[idx].articles.findIndex(a=>a.id===existingId);
+        if(ai>=0){Object.assign(state.artisans[idx].articles[ai],{titre,description,categorie});if(img)state.artisans[idx].articles[ai].imageData=img;}
+      }else{
+        state.artisans[idx].articles.push({id:'art'+Date.now(),titre,description,categorie,imageData:img||''});
+      }
+      state.currentUser.articles=state.artisans[idx].articles;
+      saveState();closeModal();showToast('✅ Article sauvegardé.');re();
+    };
+    if(fileInp.files[0])resizeImage(fileInp.files[0],500,img=>doSave(img));
+    else doSave(null);
+  };
+
+  window.deleteArticle=function(id){
+    if(!confirm('Supprimer cet article ?'))return;
+    const idx=state.artisans.findIndex(a=>a.email===u.email);
+    if(idx>=0)state.artisans[idx].articles=state.artisans[idx].articles.filter(a=>a.id!==id);
+    if(state.currentUser.articles)state.currentUser.articles=state.currentUser.articles.filter(a=>a.id!==id);
+    saveState();showToast('🗑 Article supprimé.');re();
+  };
+}
+
+// ══════════════════════════════════════════════
+// SUPPORT (ARTISAN)
+// ══════════════════════════════════════════════
+function renderSupport(container){
+  if(!state.currentUser||state.currentUser.role!=='artisan'){container.innerHTML='<p style="text-align:center;padding:40px;">Réservé aux artisans.</p>';return;}
+  const u=state.currentUser;
+  container.innerHTML=`
+  <div style="background:var(--forest);min-height:100vh;padding:30px 20px;">
+    <div style="max-width:800px;margin:0 auto;">
+      <h1 style="font-family:'Playfair Display',serif;color:var(--cream);margin-bottom:6px;">🛠️ Centre de Support</h1>
+      <p style="color:var(--muted);margin-bottom:28px;">Bonjour ${esc(u.nom)} ! Voici comment utiliser TAWURI.</p>
+      <div class="support-item"><h4>📅 Comment gérer mes rendez-vous ?</h4><p>Accédez à <strong>Calendrier</strong> depuis le menu. Vous verrez toutes les demandes en attente. Cliquez <strong>Confirmer</strong> pour accepter ou <strong>Reporter</strong> pour proposer un nouveau créneau avec date et heure.</p></div>
+      <div class="support-item"><h4>🗂️ Comment gérer mon catalogue ?</h4><p>Allez dans <strong>Catalogue</strong>. Cliquez <strong>+ Ajouter un article</strong>, renseignez le titre, la description, la catégorie et une photo. Les étudiants verront vos articles sur votre profil public.</p></div>
+      <div class="support-item"><h4>💬 Comment répondre aux messages ?</h4><p>Rendez-vous dans <strong>Messagerie</strong>. Vous verrez la liste des étudiants qui vous ont contacté. Cliquez sur une conversation, écrivez votre réponse et appuyez sur Envoyer.</p></div>
+      <div class="support-item"><h4>👤 Comment modifier mon profil ?</h4><p>Dans <strong>Mon Profil</strong>, cliquez sur <strong>Modifier</strong>. Vous pouvez changer votre nom, téléphone, ville, adresse, bio et photo de profil. N'oubliez pas de sauvegarder !</p></div>
+      <div class="support-item"><h4>📄 Comment ajouter mon catalogue PDF ?</h4><p>Dans <strong>Mon Profil</strong>, cliquez sur <strong>Uploader</strong> dans la section Catalogue PDF. Choisissez votre fichier PDF. Les étudiants pourront le télécharger depuis votre profil.</p></div>
+      <div class="support-item"><h4>⭐ Comment sont calculées mes évaluations ?</h4><p>Les étudiants peuvent vous évaluer (1 à 5 étoiles) uniquement après un RDV confirmé. La moyenne de toutes vos évaluations est affichée sur votre profil public. Soignez chaque séance !</p></div>
+      <div class="support-item"><h4>📊 Comment lire mon Tableau de bord ?</h4><p>Le tableau de bord affiche vos statistiques globales : nombre de RDV, note moyenne, articles catalogue et conversations actives. Il signale également les demandes en attente nécessitant votre attention.</p></div>
+      <div style="background:rgba(201,168,76,0.1);border:1px solid var(--gold);border-radius:var(--radius);padding:18px;margin-top:20px;">
+        <p style="color:var(--gold);font-weight:700;margin-bottom:6px;">📞 Besoin d'aide supplémentaire ?</p>
+        <p style="color:var(--muted);font-size:.88rem;">Contactez l'équipe TAWURI à <strong style="color:var(--cream);">support@tawuri.ma</strong></p>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════
+// GUIDE
+// ══════════════════════════════════════════════
+function renderGuide(container){
+  if(!state.guideActif){container.innerHTML='<p style="text-align:center;padding:60px;">📖 Guide temporairement indisponible.</p>';return;}
+  let activeKey='poterie';
+  const animBg=(canvas,c,c2)=>{
+    const ctx=canvas.getContext('2d');let angle=0;
+    const draw=()=>{
+      const w=canvas.width=canvas.parentElement.clientWidth,h=canvas.height=canvas.parentElement.clientHeight;
+      ctx.clearRect(0,0,w,h);ctx.save();ctx.translate(w/2,h/2);ctx.rotate(angle*Math.PI/180);
+      ctx.strokeStyle=c2+'40';ctx.lineWidth=1.5;
+      for(let i=0;i<8;i++){const a=(i/8)*Math.PI*2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(60*Math.cos(a),60*Math.sin(a));ctx.stroke();}
+      ctx.restore();angle+=.3;requestAnimationFrame(draw);
+    };draw();
+  };
+  const renderContent=()=>{
+    const g=state.guideData[activeKey];
+    const c=container.querySelector('#gc');
+    c.innerHTML=`
+    <div style="position:relative;background:${g.couleur};color:white;padding:40px;border-radius:var(--radius);margin-bottom:24px;min-height:240px;">
+      <canvas id="gCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;opacity:.5;"></canvas>
+      <div style="position:relative;z-index:1;"><span style="font-size:3.5rem;">${g.emoji}</span><h1 style="font-family:'Playfair Display',serif;">${g.nom}</h1></div>
+    </div>
+    <div class="card"><h3>📜 Histoire & Origines</h3><p style="white-space:pre-line;margin-top:8px;">${g.histoire||''}</p>${g.histoire_suite?`<p style="margin-top:10px;white-space:pre-line;">${g.histoire_suite}</p>`:''}</div>
+    <div class="card" style="border-left:4px solid ${g.couleur2};"><h3>🔧 Matières & Techniques</h3><p style="white-space:pre-line;margin-top:8px;">${g.techniques||''}</p></div>
+    <div class="card"><h3>🔮 Symbolisme & Décors</h3><p style="white-space:pre-line;margin-top:8px;">${g.symbolisme||''}</p></div>
+    <div class="card"><h3>🛡️ Conservation & Entretien</h3><p style="white-space:pre-line;margin-top:8px;">${g.conservation||''}</p></div>
+    <div class="card"><h3>⚙️ Outils Traditionnels</h3><div style="margin-top:8px;">${(g.outils||[]).map(o=>`<p style="margin-bottom:6px;"><strong>${o[0]}</strong> — ${o[1]}</p>`).join('')}</div></div>
+    <div class="card"><h3>📍 Régions du Maroc</h3><div style="margin-top:8px;">${(g.regions||[]).map(r=>`<p style="margin-bottom:6px;"><strong>${r[0]}</strong> ${r[1]}</p>`).join('')}</div></div>
+    <div class="card-gold"><p style="white-space:pre-line;">${g.tawuri||''}</p></div>
+    <button class="btn btn-gold" onclick="genPDF('${activeKey}')">📄 Télécharger le guide PDF</button>`;
+    const canvas=document.getElementById('gCanvas');if(canvas)animBg(canvas,g.couleur,g.couleur2);
+  };
+  container.innerHTML=`
+  <div style="display:flex;flex-wrap:wrap;min-height:80vh;">
+    <div style="background:var(--forest);width:250px;padding:18px 0;color:var(--cream);">
+      <p style="padding:0 18px;color:var(--gold);font-size:.76rem;letter-spacing:2px;margin-bottom:6px;">GUIDE TAWURI</p>
+      <div class="geometric-line" style="margin:8px 18px;"></div>
+      ${Object.keys(ARTISANAT_LABELS).map(key=>`<button class="guide-nav-btn" data-key="${key}">${ARTISANAT_LABELS[key]}</button>`).join('')}
+    </div>
+    <div id="gc" style="flex:1;min-width:280px;padding:22px;"></div>
+  </div>`;
+  container.querySelectorAll('.guide-nav-btn').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      activeKey=this.dataset.key;
+      container.querySelectorAll('.guide-nav-btn').forEach(b=>b.classList.remove('active'));
+      this.classList.add('active');renderContent();
+    });
+  });
+  const first=container.querySelector('.guide-nav-btn');if(first)first.classList.add('active');
+  renderContent();
+}
+
+window.genPDF=function(key){
+  const g=state.guideData[key];if(!g||!window.jspdf)return;
+  const{jsPDF}=window.jspdf;const doc=new jsPDF();
+  doc.setFontSize(18);doc.text(g.nom,105,20,null,null,'center');
+  doc.setFontSize(10);
+  const text=(g.histoire||'')+'\n\n'+(g.histoire_suite||'')+'\n\n'+(g.techniques||'')+'\n\n'+(g.symbolisme||'')+'\n\n'+(g.conservation||'');
+  const lines=doc.splitTextToSize(text,180);
+  doc.text(lines,15,35);doc.save(`Guide_${key}.pdf`);
+};
+
+// ══════════════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════════════
+function renderAdmin(container){
+  if(!state.currentUser||state.currentUser.role!=='admin'){container.innerHTML='<p style="text-align:center;padding:40px;">🔒 Accès refusé.</p>';return;}
+  let tab='users';
+  const re=()=>{
+    const allUsers=[...state.artisans,...state.users.filter(u=>u.role==='etudiant')];
+    container.innerHTML=`
+    <div style="background:var(--forest);min-height:100vh;padding:30px 20px;">
+      <div style="max-width:1100px;margin:0 auto;">
+        <h1 style="font-family:'Playfair Display',serif;color:var(--cream);margin-bottom:20px;">⚙️ Administration TAWURI</h1>
+        <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+          <button class="btn ${tab==='users'?'btn-gold':'btn-outline'}" style="${tab!=='users'?'color:var(--muted);border-color:var(--muted);':''}" onclick="setAdminTab('users')">👥 Comptes (${allUsers.length})</button>
+          <button class="btn ${tab==='add'?'btn-gold':'btn-outline'}" style="${tab!=='add'?'color:var(--muted);border-color:var(--muted);':''}" onclick="setAdminTab('add')">➕ Ajouter un compte</button>
+          <button class="btn ${tab==='guide'?'btn-gold':'btn-outline'}" style="${tab!=='guide'?'color:var(--muted);border-color:var(--muted);':''}" onclick="setAdminTab('guide')">📖 Guide (${state.guideActif?'Actif':'Désactivé'})</button>
+          <button class="btn ${tab==='inscriptions'?'btn-gold':'btn-outline'}" style="${tab!=='inscriptions'?'color:var(--muted);border-color:var(--muted);':''}" onclick="setAdminTab('inscriptions')">📋 Inscriptions (${allUsers.length})</button>
+          <button class="btn ${tab==='stats'?'btn-gold':'btn-outline'}" style="${tab!=='stats'?'color:var(--muted);border-color:var(--muted);':''}" onclick="setAdminTab('stats')">📊 Statistiques</button>
+        </div>
+        <div id="admin-content"></div>
+      </div>
+    </div>`;
+
+    window.setAdminTab=function(t){tab=t;re();};
+
+    const ac=document.getElementById('admin-content');
+    if(tab==='users'){
+      ac.innerHTML=`
+      <div style="background:rgba(255,255,255,0.04);border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+        ${allUsers.map(u=>{
+          const st=getStatus(u.email);
+          return`<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.07);flex-wrap:wrap;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="font-size:1.4rem;">${u.avatar||'👤'}</span>
+              <div>
+                <p style="color:var(--cream);font-weight:600;">${esc(u.nom)}</p>
+                <p style="color:var(--muted);font-size:.78rem;">${u.role==='artisan'?esc(u.spec):'Étudiant'} — ${esc(u.email)}</p>
+                ${u.dateInscription?`<p style="color:var(--mint);font-size:.73rem;">📅 Inscrit le ${fmtDate(u.dateInscription)}</p>`:''}
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <span style="padding:3px 12px;border-radius:20px;font-size:.75rem;font-weight:700;background:${st==='Actif'?'rgba(74,140,92,0.2)':st==='Restreint'?'rgba(201,168,76,0.2)':'rgba(248,113,113,0.2)'};color:${st==='Actif'?'var(--mint)':st==='Restreint'?'var(--gold)':'var(--red)'};">${st}</span>
+              <button class="btn btn-sm" style="background:rgba(74,140,92,0.2);color:var(--mint);" onclick="setStatut('${u.email}','Actif')">✅</button>
+              <button class="btn btn-sm" style="background:rgba(201,168,76,0.2);color:var(--gold);" onclick="setStatut('${u.email}','Restreint')">⚠️</button>
+              <button class="btn btn-sm" style="background:rgba(248,113,113,0.15);color:var(--red);" onclick="setStatut('${u.email}','Bloqué')">🚫</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteUser('${u.email}')">🗑</button>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>`;
+    }else if(tab==='add'){
+      ac.innerHTML=`
+      <div class="card" style="max-width:500px;">
+        <h3 style="color:var(--forest);margin-bottom:16px;">➕ Créer un nouveau compte</h3>
+        <div style="display:flex;gap:8px;margin-bottom:16px;">
+          <button class="btn btn-gold btn-sm" id="add-etu" onclick="adminSetAddRole('etudiant')">🧑‍🎓 Étudiant</button>
+          <button class="btn btn-outline btn-sm" id="add-art" onclick="adminSetAddRole('artisan')">🏺 Artisan</button>
+        </div>
+        <div id="add-form"></div>
+      </div>`;
+      window.adminSetAddRole=function(r){
+        document.getElementById('add-etu').className='btn btn-sm '+(r==='etudiant'?'btn-gold':'btn-outline');
+        document.getElementById('add-art').className='btn btn-sm '+(r==='artisan'?'btn-gold':'btn-outline');
+        const f=document.getElementById('add-form');
+        if(r==='etudiant'){
+          f.innerHTML=`
+          <div class="form-group"><label>Nom complet</label><input id="an2"></div>
+          <div class="form-group"><label>Email</label><input type="email" id="ae2"></div>
+          <div class="form-group"><label>Ville</label><select id="av2">${VILLES.map(v=>`<option>${v}</option>`).join('')}</select></div>
+          <div class="form-group"><label>Mot de passe</label><input type="password" id="ap2" value="temp1234"></div>
+          <button class="btn btn-primary" onclick="adminAddEtudiant()">Créer →</button>`;
+        }else{
+          f.innerHTML=`
+          <div class="form-group"><label>Nom complet</label><input id="an2"></div>
+          <div class="form-group"><label>Téléphone</label><input id="atel2"></div>
+          <div class="form-group"><label>Ville</label><select id="av2">${VILLES.map(v=>`<option>${v}</option>`).join('')}</select></div>
+          <div class="form-group"><label>Adresse</label><input id="aad2"></div>
+          <div class="form-group"><label>Spécialité</label><select id="as2">${SPECIALITES.map(s=>`<option>${s}</option>`).join('')}</select></div>
+          <div class="form-group"><label>Mot de passe</label><input type="password" id="ap2" value="temp1234"></div>
+          <button class="btn btn-primary" onclick="adminAddArtisan()">Créer →</button>`;
+        }
+      };
+      window.adminAddEtudiant=function(){
+        const nom=san(document.getElementById('an2').value);
+        const email=san(document.getElementById('ae2').value.toLowerCase());
+        const ville=document.getElementById('av2').value;
+        const pwd=document.getElementById('ap2').value;
+        if(!nom||!email||!pwd){showToast('⚠️ Champs manquants.','error');return;}
+        state.users.push({nom,email,ville,pwd,role:'etudiant',avatar:'🧑‍🎓',photo:'',dateInscription:Date.now()});
+        saveState();showToast('✅ Compte étudiant créé.');re();
+      };
+      window.adminAddArtisan=function(){
+        const nom=san(document.getElementById('an2').value);
+        const tel=san(document.getElementById('atel2').value);
+        const ville=document.getElementById('av2').value;
+        const adresse=san(document.getElementById('aad2').value);
+        const spec=document.getElementById('as2').value;
+        const pwd=document.getElementById('ap2').value;
+        if(!nom||!tel||!pwd){showToast('⚠️ Champs manquants.','error');return;}
+        const a={id:'a'+Date.now(),nom,email:tel,tel,ville,adresse,spec,pwd,role:'artisan',avatar:spec.split(' ')[0]||'🏺',photo:'',bio:'',articles:[],cataloguePdf:'',dateInscription:Date.now()};
+        state.artisans.push(a);state.users.push(a);
+        saveState();showToast('✅ Compte artisan créé.');re();
+      };
+      window.adminSetAddRole('etudiant');
+    }else if(tab==='guide'){
+      const keys=Object.keys(state.guideData);
+      ac.innerHTML=`
+      <div class="card">
+        <h3 style="color:var(--forest);margin-bottom:16px;">📖 Gestion du Guide</h3>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+          <span style="color:${state.guideActif?'var(--sage)':'var(--red)'};">Guide : ${state.guideActif?'✅ Actif':'🚫 Désactivé'}</span>
+          <button class="btn btn-gold btn-sm" onclick="toggleGuide()">${state.guideActif?'Désactiver':'Activer'} le guide</button>
+          <button class="btn btn-primary btn-sm" onclick="showAddDocModal()">➕ Ajouter un document</button>
+        </div>
+        <h4 style="color:var(--forest);margin-bottom:12px;">Sections disponibles (${keys.length}) :</h4>
+        ${keys.map(k=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;flex-wrap:wrap;gap:8px;">
+          <div>
+            <span style="font-size:1.2rem;">${state.guideData[k].emoji||'📄'}</span>
+            <strong style="margin-left:6px;">${esc(state.guideData[k].nom||k)}</strong>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-sm" style="background:rgba(74,140,92,0.15);color:var(--forest);" onclick="showEditDocModal('${k}')">✏️ Modifier</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteGuideDoc('${k}')">🗑 Supprimer</button>
+          </div>
+        </div>`).join('')}
+        ${!keys.length?`<p style="color:#888;text-align:center;padding:20px;">Aucune section dans le guide. Ajoutez-en une !</p>`:''}
+      </div>`;
+
+      window.showAddDocModal=function(){
+        showModal(`
+        <h3 style="color:var(--forest);margin-bottom:16px;">➕ Ajouter un document au guide</h3>
+        <div class="form-group"><label>Clé unique (sans espaces) *</label><input id="gk" placeholder="ex: ceramique_moderne"></div>
+        <div class="form-group"><label>Emoji</label><input id="ge" placeholder="🏺" maxlength="4"></div>
+        <div class="form-group"><label>Nom du document *</label><input id="gn" placeholder="ex: La Céramique Moderne"></div>
+        <div class="form-group"><label>Couleur principale (hex)</label><input id="gc2" placeholder="#8B4513" value="#245038"></div>
+        <div class="form-group"><label>Histoire / Contenu principal *</label><textarea id="gh" rows="5" placeholder="Décrivez cet artisanat..."></textarea></div>
+        <div class="form-group"><label>Techniques</label><textarea id="gt" rows="3" placeholder="Matières et techniques utilisées..."></textarea></div>
+        <div class="form-group"><label>Symbolisme</label><textarea id="gs" rows="3" placeholder="Signification des motifs et symboles..."></textarea></div>
+        <div class="form-group"><label>Conseil conservation</label><textarea id="gcon" rows="2" placeholder="Comment entretenir les créations..."></textarea></div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+          <button class="btn btn-primary" style="flex:1;" onclick="saveNewDoc()">Ajouter →</button>
+        </div>`);
+      };
+
+      window.showEditDocModal=function(key){
+        const g=state.guideData[key];if(!g)return;
+        showModal(`
+        <h3 style="color:var(--forest);margin-bottom:16px;">✏️ Modifier : ${esc(g.nom||key)}</h3>
+        <div class="form-group"><label>Emoji</label><input id="ge" value="${esc(g.emoji||'')}" maxlength="4"></div>
+        <div class="form-group"><label>Nom du document *</label><input id="gn" value="${esc(g.nom||'')}"></div>
+        <div class="form-group"><label>Couleur principale (hex)</label><input id="gc2" value="${esc(g.couleur||'#245038')}"></div>
+        <div class="form-group"><label>Histoire / Contenu principal *</label><textarea id="gh" rows="5">${esc(g.histoire||'')}</textarea></div>
+        <div class="form-group"><label>Techniques</label><textarea id="gt" rows="3">${esc(g.techniques||'')}</textarea></div>
+        <div class="form-group"><label>Symbolisme</label><textarea id="gs" rows="3">${esc(g.symbolisme||'')}</textarea></div>
+        <div class="form-group"><label>Conseil conservation</label><textarea id="gcon" rows="2">${esc(g.conservation||'')}</textarea></div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <button class="btn btn-outline" style="flex:1;" onclick="closeModal()">Annuler</button>
+          <button class="btn btn-primary" style="flex:1;" onclick="saveEditDoc('${key}')">Sauvegarder →</button>
+        </div>`);
+      };
+
+      window.saveNewDoc=function(){
+        let key=san(document.getElementById('gk').value).replace(/\s+/g,'_').toLowerCase();
+        const nom=san(document.getElementById('gn').value);
+        if(!key||!nom){showToast('⚠️ Clé et nom obligatoires.','error');return;}
+        if(state.guideData[key]){showToast('⚠️ Cette clé existe déjà.','error');return;}
+        const emoji=document.getElementById('ge').value.trim()||'📄';
+        const couleur=document.getElementById('gc2').value.trim()||'#245038';
+        const histoire=document.getElementById('gh').value.trim();
+        const techniques=document.getElementById('gt').value.trim();
+        const symbolisme=document.getElementById('gs').value.trim();
+        const conservation=document.getElementById('gcon').value.trim();
+        state.guideData[key]={emoji,nom,couleur,couleur2:couleur,histoire,techniques,symbolisme,conservation,regions:[],tawuri:''};
+        saveState();closeModal();showToast('✅ Document ajouté au guide.');re();
+      };
+
+      window.saveEditDoc=function(key){
+        if(!state.guideData[key])return;
+        const nom=san(document.getElementById('gn').value);
+        if(!nom){showToast('⚠️ Nom obligatoire.','error');return;}
+        state.guideData[key].emoji=document.getElementById('ge').value.trim()||'📄';
+        state.guideData[key].nom=nom;
+        state.guideData[key].couleur=document.getElementById('gc2').value.trim()||'#245038';
+        state.guideData[key].couleur2=state.guideData[key].couleur;
+        state.guideData[key].histoire=document.getElementById('gh').value.trim();
+        state.guideData[key].techniques=document.getElementById('gt').value.trim();
+        state.guideData[key].symbolisme=document.getElementById('gs').value.trim();
+        state.guideData[key].conservation=document.getElementById('gcon').value.trim();
+        saveState();closeModal();showToast('✅ Document mis à jour.');re();
+      };
+
+      window.deleteGuideDoc=function(key){
+        if(!confirm(`Supprimer la section "${state.guideData[key]?.nom||key}" du guide ?`))return;
+        delete state.guideData[key];
+        saveState();showToast('🗑 Section supprimée du guide.');re();
+      };
+    }else if(tab==='inscriptions'){
+      const sortedUsers=[...allUsers].sort((a,b)=>(b.dateInscription||0)-(a.dateInscription||0));
+      ac.innerHTML=`
+      <div style="background:rgba(255,255,255,0.04);border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:0;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.15);color:var(--gold);font-size:.78rem;font-weight:700;letter-spacing:.5px;">
+          <span>NOM</span><span>RÔLE / SPÉCIALITÉ</span><span>CONTACT</span><span>DATE D'INSCRIPTION</span><span>STATUT</span>
+        </div>
+        ${sortedUsers.length?sortedUsers.map(u=>{
+          const st=getStatus(u.email);
+          const dateStr=u.dateInscription?fmtDate(u.dateInscription):'—';
+          return`<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:8px;align-items:center;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:1.3rem;">${u.avatar||'👤'}</span><span style="color:var(--cream);font-weight:600;">${esc(u.nom)}</span></div>
+            <span style="color:var(--muted);font-size:.85rem;">${u.role==='artisan'?esc(u.spec):'🧑‍🎓 Étudiant'}</span>
+            <span style="color:var(--muted);font-size:.82rem;">${esc(u.email)}</span>
+            <span style="color:var(--mint);font-size:.82rem;">📅 ${dateStr}</span>
+            <span style="padding:3px 12px;border-radius:20px;font-size:.75rem;font-weight:700;background:${st==='Actif'?'rgba(74,140,92,0.2)':st==='Restreint'?'rgba(201,168,76,0.2)':'rgba(248,113,113,0.2)'};color:${st==='Actif'?'var(--mint)':st==='Restreint'?'var(--gold)':'var(--red)'};">${st}</span>
+          </div>`;
+        }).join(''):`<p style="color:var(--muted);text-align:center;padding:40px;">Aucune inscription pour le moment.</p>`}
+      </div>`;
+    }else if(tab==='stats'){
+      const totalU=state.users.filter(u=>u.role==='etudiant').length;
+      const totalA=state.artisans.length;
+      const totalRdv=state.rdvs.length;
+      const totalEv=state.evaluations.length;
+      const totalMsg=Object.values(state.messages).reduce((s,m)=>s+m.length,0);
+      ac.innerHTML=`
+      <div class="grid-4">
+        <div class="stat-card" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
+          <div class="stat-icon">🧑‍🎓</div><div class="stat-num">${totalU}</div><div class="stat-label">Étudiants</div>
+        </div>
+        <div class="stat-card" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
+          <div class="stat-icon">🏺</div><div class="stat-num">${totalA}</div><div class="stat-label">Artisans</div>
+        </div>
+        <div class="stat-card" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
+          <div class="stat-icon">📅</div><div class="stat-num">${totalRdv}</div><div class="stat-label">Rendez-vous</div>
+        </div>
+        <div class="stat-card" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
+          <div class="stat-icon">⭐</div><div class="stat-num">${totalEv}</div><div class="stat-label">Évaluations</div>
+        </div>
+        <div class="stat-card" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
+          <div class="stat-icon">💬</div><div class="stat-num">${totalMsg}</div><div class="stat-label">Messages envoyés</div>
+        </div>
+        <div class="stat-card" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">
+          <div class="stat-icon">🎨</div><div class="stat-num">${state.creations.length}</div><div class="stat-label">Créations partagées</div>
+        </div>
+      </div>`;
+    }
+  };re();
+
+  window.setStatut=function(email,s){
+    state.statuts[email]=s;saveState();
+    if(state.currentUser&&state.currentUser.email===email&&s==='Bloqué'){doLogout();return;}
+    showToast(`✅ Statut mis à jour : ${s}`);re();
+  };
+  window.deleteUser=function(email){
+    if(!confirm('Supprimer définitivement ce compte ?'))return;
+    state.users=state.users.filter(u=>u.email!==email);
+    state.artisans=state.artisans.filter(a=>a.email!==email);
+    saveState();showToast('🗑 Compte supprimé.');re();
+  };
+  window.toggleGuide=function(){
+    state.guideActif=!state.guideActif;saveState();showToast(`Guide ${state.guideActif?'activé':'désactivé'}.`);re();
+  };
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+updateNav();
+navigate('accueil');
+</script>
+</body>
+</html>
