@@ -1,25 +1,12 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from datetime import datetime
 
 app = Flask(__name__)
 
 def get_db_connection():
     return psycopg2.connect(os.getenv('DATABASE_URL'))
-
-def init_db():
-    with get_db_connection() as conn:
-        with conn.cursor() as cur:
-            cur.execute("""
-                CREATE TABLE IF NOT EXISTS subscribers (
-                    id SERIAL PRIMARY KEY,
-                    email VARCHAR(255) UNIQUE NOT NULL,
-                    subscribed_at TIMESTAMP DEFAULT NOW()
-                );
-            """)
-            conn.commit()
 
 @app.route('/')
 def index():
@@ -36,8 +23,7 @@ def inscription():
                 cur.execute("INSERT INTO subscribers (email) VALUES (%s) ON CONFLICT (email) DO NOTHING", (email,))
                 conn.commit()
         return '', 200
-    except Exception as e:
-        print(e)
+    except Exception:
         return '', 500
 
 @app.route('/admin')
@@ -56,8 +42,4 @@ def admin():
         </body></html>
         """
     except Exception as e:
-        return f"Erreur : {e}", 500
-
-if __name__ == '__main__':
-    init_db()
-    app.run(debug=False, host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
+        return f"Erreur DB : {e}", 500
